@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
         } else {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'getJOBS',
+            title: 'ArchNEO',
             theme: ThemeData(
               scaffoldBackgroundColor: Colors.white,
               primarySwatch: Colors.blue,
