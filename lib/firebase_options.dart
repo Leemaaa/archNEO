@@ -54,6 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBcT-aXVJ41Nbgg0x78wphWkJ2GXDvUHuA',
+    databaseURL: 'https://getjob-ef46d.farebaseio.com/',
     appId: '1:182814081093:android:cf2a9b7687f47311f4e32c',
     messagingSenderId: '182814081093',
     projectId: 'getjob-ef46d',
