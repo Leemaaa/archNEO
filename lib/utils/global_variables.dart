@@ -24,6 +24,9 @@ List<String> jobCategories = [
   'Accounting',
 ];
 
+const String appId = "30634a79a6b54d5da04faea54f0a9b1a";
+const String token = "00630634a79a6b54d5da04faea";
+
 String? name;
 String? user_image;
 String? address;

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(name: "arhcNEO", options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(name: "archNEO", options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 

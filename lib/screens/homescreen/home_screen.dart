@@ -5,6 +5,7 @@ import 'package:freelance_app/screens/activity/activity.dart';
 
 import 'package:freelance_app/screens/homescreen/components/categories.dart';
 import 'package:freelance_app/screens/profile/profile.dart';
+import 'package:freelance_app/screens/videocalls/video_call.dart';
 import 'package:freelance_app/utils/colors.dart';
 import 'package:freelance_app/screens/homescreen/components/posted_jobs.dart';
 import 'package:freelance_app/screens/homescreen/sidebar.dart';
@@ -68,6 +69,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         ProfilePage(
           userID: _uid,
         ),
+        VideoCallPage(),
       ][currentIndex],
       floatingActionButton: currentIndex == 0 || currentIndex == 1
           ? FloatingActionButton(
@@ -161,6 +163,20 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               ),
               title: Text(
                 "Profile",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              )),
+          BubbleBottomBarItem(
+              backgroundColor: Color(0xff187795),
+              icon: Icon(
+                Icons.video_call,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.video_call_outlined,
+                color: Colors.white,
+              ),
+              title: Text(
+                "VideoCall",
                 style: TextStyle(color: Colors.white, fontSize: 16),
               )),
         ],
