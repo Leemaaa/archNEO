@@ -84,7 +84,11 @@ class ChooseRoleScreen extends StatelessWidget {
                     TextSpan(
                       recognizer: TapGestureRecognizer()
                         ..onTap = () =>
-                        Navigator.canPop(context) ? Navigator.pop(context) : null,
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()),
+                            ),
                       text: 'Login',
                       style: txt.mediumTextButton,
                     ),

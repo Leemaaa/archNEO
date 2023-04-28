@@ -13,6 +13,8 @@ import 'package:freelance_app/utils/clr.dart';
 import 'package:freelance_app/utils/layout.dart';
 import 'package:freelance_app/utils/txt.dart';
 
+import 'login_screen.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -609,7 +611,11 @@ class _SignUpScreenState extends State<SignUpScreen>
           TextSpan(
             recognizer: TapGestureRecognizer()
               ..onTap = () =>
-                  Navigator.canPop(context) ? Navigator.pop(context) : null,
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                  ),
             text: 'Login',
             style: txt.mediumTextButton,
           ),

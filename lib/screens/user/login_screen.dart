@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:freelance_app/screens/homescreen/home_screen.dart';
 import 'package:freelance_app/screens/user/architect_signup_screen.dart';
+import 'package:freelance_app/screens/user/role.dart';
 import 'package:freelance_app/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_app/utils/clr.dart';
@@ -8,6 +10,7 @@ import 'package:freelance_app/utils/clr.dart';
 import 'package:freelance_app/config/firebase_auth_service.dart';
 import 'package:freelance_app/widgets/custom_button.dart';
 import 'package:freelance_app/screens/user/forgot_password.dart';
+import 'package:freelance_app/utils/txt.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -246,33 +249,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(48, 8, 8, 8.0),
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Text("Don't have an account?",
-                          style: TextStyle(
-                            color: Color(0xff1E232C),
-                            fontSize: 15,
-                          )),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpScreen()),
-                          );
-                        },
-                        child: const Text("  Register Now",
-                            style: TextStyle(
-                              color: Color(0xff35C2C1),
-                              fontSize: 15,
-                            )),
+                Center(
+                  child: RichText(
+                    text: TextSpan(children: [
+                      const TextSpan(
+                        text: "Don't have an account?",
+                        style: txt.body2Dark,
                       ),
-                    ],
+                      const TextSpan(text: '   '),
+                      TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () =>
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ChooseRoleScreen()),
+                              ),
+                        text: 'Register Now',
+                        style: txt.mediumTextButton,
+                      ),
+                    ]),
                   ),
-                )
+                ),
               ],
             ),
           ),
