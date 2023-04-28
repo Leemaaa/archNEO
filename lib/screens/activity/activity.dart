@@ -31,7 +31,7 @@ class _JobsActivityState extends State<JobsActivity> {
             ),
           ),
           bottom: const TabBar(
-            tabs: [Tab(text: 'Jobs Posted'), Tab(text: 'Chat')],
+            tabs: [Tab(text: 'Events'), Tab(text: 'Conferences')],
             labelColor: Colors.black,
             labelStyle: TextStyle(fontSize: 15),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freelance_app/screens/user/login_screen.dart';
-import 'package:freelance_app/screens/user/signup_screen.dart';
+import 'package:freelance_app/screens/user/role.dart';
+import 'package:freelance_app/screens/user/architect_signup_screen.dart';
 
 import '../widgets/custom_button.dart';
 
@@ -53,7 +54,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const SignUpScreen(),
+                    builder: (_) => const ChooseRoleScreen(),
                   ),
                 );
               },

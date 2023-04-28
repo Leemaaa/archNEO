@@ -28,8 +28,8 @@ class _ApplicantsAppState extends State<ApplicantsApp> {
         .get();
 
     setState(() {
-      nameForposted = userDoc.get('name');
-      userImageForPosted = userDoc.get('user_image');
+      nameForposted = userDoc.get('Name');
+      userImageForPosted = userDoc.get('PhotoUrl');
       addressForposted = userDoc.get('address');
     });
   }
@@ -81,10 +81,10 @@ class _ApplicantsAppState extends State<ApplicantsApp> {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Applicant(
-                      name: snapshot.data!['applicantsList'][index]['name'],
+                      name: snapshot.data!['applicantsList'][index]['Name'],
                       //title: snapshot.data.docs[index]['title'],
                       profilePic: snapshot.data!['applicantsList'][index]
-                          ['user_image'],
+                          ['PhotoUrl'],
                       date: snapshot.data!['applicantsList'][index]
                               ['timeapplied']
                           .toDate(),
@@ -130,10 +130,10 @@ Container(
                     itemCount: snapshot.data?.docs.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Applicant(
-                        name: snapshot.data!['applicantsList'][index]['name'],
+                        name: snapshot.data!['applicantsList'][index]['Name'],
                         //title: snapshot.data.docs[index]['title'],
                         profilePic: snapshot.data!['applicantsList']
-                            ['user_image'],
+                            ['PhotoUrl'],
                         date: snapshot.data!['applicantsList'][index]
                                 ['timeapplied']
                             .toDate(),

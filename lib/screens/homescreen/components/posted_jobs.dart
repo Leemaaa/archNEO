@@ -25,8 +25,8 @@ class _PostedjobState extends State<Postedjob> {
         .get();
 
     setState(() {
-      name = userDoc.get('name');
-      user_image = userDoc.get('user_image');
+      name = userDoc.get('Name');
+      user_image = userDoc.get('PhotoUrl');
       address = userDoc.get('address');
     });
   }
@@ -84,7 +84,7 @@ class _PostedjobState extends State<Postedjob> {
                 .collection('jobPosted')
                 .where('category', isEqualTo: jobCategoryFilter)
                 .where('recruiting', isEqualTo: true)
-                .orderBy('created', descending: true)
+                .orderBy('CreatedAt', descending: true)
                 .snapshots(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -106,10 +106,10 @@ class _PostedjobState extends State<Postedjob> {
                             jobTitle: snapshot.data.docs[index]['title'],
                             jobDesc: snapshot.data.docs[index]['desc'],
                             uploadedBy: snapshot.data.docs[index]['id'],
-                            contactName: snapshot.data.docs[index]['name'],
+                            contactName: snapshot.data.docs[index]['Name'],
                             contactImage: snapshot.data.docs[index]
-                                ['user_image'],
-                            contactEmail: snapshot.data.docs[index]['email'],
+                                ['PhotoUrl'],
+                            contactEmail: snapshot.data.docs[index]['Email'],
                             jobLocation: snapshot.data.docs[index]['address'],
                             recruiting: snapshot.data.docs[index]['recruiting'],
                           );

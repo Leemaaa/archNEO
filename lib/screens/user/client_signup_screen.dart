@@ -13,14 +13,14 @@ import 'package:freelance_app/utils/clr.dart';
 import 'package:freelance_app/utils/layout.dart';
 import 'package:freelance_app/utils/txt.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class ClientSignUpScreen extends StatefulWidget {
+  const ClientSignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  _ClientSignUpScreenState createState() => _ClientSignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen>
+class _ClientSignUpScreenState extends State<ClientSignUpScreen>
     with TickerProviderStateMixin {
   late Animation<double> _animation;
   late AnimationController _animationController;
@@ -40,9 +40,6 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   final TextEditingController _phoneController = TextEditingController();
   final FocusNode _phoneFocusNode = FocusNode();
-
-  final TextEditingController _addressController = TextEditingController();
-  final FocusNode _addressFocusNode = FocusNode();
 
   bool _isLoading = false;
 
@@ -79,12 +76,10 @@ class _SignUpScreenState extends State<SignUpScreen>
     _emailController.dispose();
     _passwordController.dispose();
     _phoneController.dispose();
-    _addressController.dispose();
     _nameFocusNode.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
     _phoneFocusNode.dispose();
-    _addressFocusNode.dispose();
     super.dispose();
   }
 
@@ -134,17 +129,12 @@ class _SignUpScreenState extends State<SignUpScreen>
                       padding: const EdgeInsets.only(bottom: layout.padding),
                       child: _phoneFormField(),
                     ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(bottom: layout.padding * 2),
-                      child: _addressFormField(),
-                    ),
                     _isLoading
                         ? _progressIndicator()
                         : Padding(
-                            padding: const EdgeInsets.all(layout.padding),
-                            child: _signUpButton(),
-                          ),
+                      padding: const EdgeInsets.all(layout.padding),
+                      child: _signUpButton(),
+                    ),
                     _haveAccount(),
                   ]),
                 ),
@@ -188,30 +178,30 @@ class _SignUpScreenState extends State<SignUpScreen>
                 borderRadius: BorderRadius.circular(layout.radius),
                 child: imageFile == null
                     ? Stack(
-                        children: [
-                          Positioned(
-                            bottom: cameraIconSpacing,
-                            right: cameraIconSpacing,
-                            child: Icon(
-                              Icons.camera_enhance_sharp,
-                              color: clr.light.withOpacity(0.8),
-                              size: cameraIconSize,
-                            ),
-                          ),
-                        ],
-                      )
+                  children: [
+                    Positioned(
+                      bottom: cameraIconSpacing,
+                      right: cameraIconSpacing,
+                      child: Icon(
+                        Icons.camera_enhance_sharp,
+                        color: clr.light.withOpacity(0.8),
+                        size: cameraIconSize,
+                      ),
+                    ),
+                  ],
+                )
                     : Stack(children: [
-                        Image.file(imageFile!, fit: BoxFit.fill),
-                        Positioned(
-                          bottom: cameraIconSpacing,
-                          right: cameraIconSpacing,
-                          child: Icon(
-                            Icons.camera_enhance_sharp,
-                            color: clr.light.withOpacity(0.6),
-                            size: cameraIconSize,
-                          ),
-                        )
-                      ]),
+                  Image.file(imageFile!, fit: BoxFit.fill),
+                  Positioned(
+                    bottom: cameraIconSpacing,
+                    right: cameraIconSpacing,
+                    child: Icon(
+                      Icons.camera_enhance_sharp,
+                      color: clr.light.withOpacity(0.6),
+                      size: cameraIconSize,
+                    ),
+                  )
+                ]),
               ),
             ),
           ),
@@ -355,7 +345,7 @@ class _SignUpScreenState extends State<SignUpScreen>
       style: txt.fieldDark,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
-      onEditingComplete: () => _addressFocusNode.requestFocus(),
+      onEditingComplete: () => _phoneFocusNode.unfocus(),
       decoration: InputDecoration(
         labelText: 'Phone number',
         labelStyle: txt.labelDark,
@@ -381,48 +371,6 @@ class _SignUpScreenState extends State<SignUpScreen>
       validator: (value) {
         if (value!.isEmpty) {
           return 'Please enter a valid phone number';
-        } else {
-          return null;
-        }
-      },
-    );
-  }
-
-  Widget _addressFormField() {
-    return TextFormField(
-      enabled: true,
-      focusNode: _addressFocusNode,
-      autofocus: false,
-      controller: _addressController,
-      style: txt.fieldDark,
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.done,
-      onEditingComplete: () => _addressFocusNode.unfocus(),
-      decoration: InputDecoration(
-        labelText: 'Address',
-        labelStyle: txt.labelDark,
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        floatingLabelStyle: txt.labelDark,
-        errorStyle: txt.error,
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: clr.bottomNavBarIcon,
-          ),
-        ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: clr.light,
-          ),
-        ),
-        errorBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: clr.error,
-          ),
-        ),
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter a valid address';
         } else {
           return null;
         }
@@ -483,7 +431,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         return;
       }
       setState(
-        () {
+            () {
           _isLoading = true;
         },
       );
@@ -500,21 +448,29 @@ class _SignUpScreenState extends State<SignUpScreen>
             .child('$uID.jpg');
         await ref.putFile(imageFile!);
         imageUrl = await ref.getDownloadURL();
-        FirebaseFirestore.instance.collection('users').doc(uID).set(
+        FirebaseFirestore.instance.collection('clients').doc(uID).set(
+          {
+            'ID': uID,
+            'PhotoUrl': imageUrl,
+            'Name': _nameController.text,
+            'Email': _emailController.text,
+            'Phone': _phoneController.text,
+            'CreatedAt': Timestamp.now(),
+            'Bio': 'Short description about yourself, what you do and so on.',
+          },
+        );
+        FirebaseFirestore.instance.collection('roles').doc(uID).set(
           {
             'id': uID,
-            'user_image': imageUrl,
-            'name': _nameController.text,
-            'email': _emailController.text,
-            'phone_number': _phoneController.text,
-            'address': _addressController.text,
-            'created': Timestamp.now(),
+            'Role': 'client',
+            'Email': _emailController.text,
+            'CreatedAt': Timestamp.now(),
           },
         );
         Navigator.canPop(context) ? Navigator.pop(context) : null;
       } catch (error) {
         setState(
-          () {
+              () {
             _isLoading = false;
           },
         );
@@ -529,7 +485,7 @@ class _SignUpScreenState extends State<SignUpScreen>
       }
     }
     setState(
-      () {
+          () {
         _isLoading = false;
       },
     );
@@ -547,7 +503,7 @@ class _SignUpScreenState extends State<SignUpScreen>
           TextSpan(
             recognizer: TapGestureRecognizer()
               ..onTap = () =>
-                  Navigator.canPop(context) ? Navigator.pop(context) : null,
+              Navigator.canPop(context) ? Navigator.pop(context) : null,
             text: 'Login',
             style: txt.mediumTextButton,
           ),
@@ -611,14 +567,14 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   void _getFromCamera() async {
     XFile? pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.camera);
+    await ImagePicker().pickImage(source: ImageSource.camera);
     _cropImage(pickedFile!.path);
     Navigator.pop(context);
   }
 
   void _getFromGallery() async {
     XFile? pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    await ImagePicker().pickImage(source: ImageSource.gallery);
     _cropImage(pickedFile!.path);
     Navigator.pop(context);
   }
@@ -631,7 +587,7 @@ class _SignUpScreenState extends State<SignUpScreen>
     );
     if (croppedImage != null) {
       setState(
-        () {
+            () {
           imageFile = File(croppedImage.path);
         },
       );

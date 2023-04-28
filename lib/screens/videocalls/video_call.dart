@@ -31,7 +31,7 @@ class VideoCallState extends State<VideoCallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agora Flutter QuickStart'),
+        title: Text('Conference'),
       ),
       body: Center(
         child: Container(
@@ -50,7 +50,7 @@ class VideoCallState extends State<VideoCallPage> {
                         border: UnderlineInputBorder(
                           borderSide: BorderSide(width: 1),
                         ),
-                        hintText: 'Channel name',
+                        hintText: 'Conference name',
                       ),
                     ),
                   )

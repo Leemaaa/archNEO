@@ -36,11 +36,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return;
       } else {
         setState(() {
-          email = userDoc.get('email');
-          name = userDoc.get('name');
+          email = userDoc.get('Email');
+          name = userDoc.get('Name');
           phoneNumber = userDoc.get('phoneNumber');
-          imageUrl = userDoc.get('user_image');
-          Timestamp joinedAtTimeStamp = userDoc.get('created');
+          imageUrl = userDoc.get('PhotoUrl');
+          Timestamp joinedAtTimeStamp = userDoc.get('CreatedAt');
           var joinedDate = joinedAtTimeStamp.toDate();
           joinedAt = '${joinedDate.year}-${joinedDate.month}-${joinedDate.day}';
         });

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:freelance_app/screens/homescreen/home_screen.dart';
-import 'package:freelance_app/screens/user/signup_screen.dart';
+import 'package:freelance_app/screens/user/architect_signup_screen.dart';
 import 'package:freelance_app/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_app/utils/clr.dart';

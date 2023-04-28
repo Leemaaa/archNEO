@@ -67,8 +67,8 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
         {
           'id': FirebaseAuth.instance.currentUser!.uid,
           'applicantsId': widget.job_id,
-          'name': authorName,
-          'user_image': user_image,
+          'Name': authorName,
+          'PhotoUrl': user_image,
           //'commentBody': _commentController.text,
           'timeapplied': Timestamp.now(),
         }
@@ -94,8 +94,8 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
       return;
     } else {
       setState(() {
-        authorName = userDoc.get('name');
-        userImageUrl = userDoc.get('user_image');
+        authorName = userDoc.get('Name');
+        userImageUrl = userDoc.get('PhotoUrl');
       });
     }
     final DocumentSnapshot jobDatabase = await FirebaseFirestore.instance
@@ -109,10 +109,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
         jobTitle = jobDatabase.get('title');
         jobDescription = jobDatabase.get('desc');
         recruitment = jobDatabase.get('recruiting');
-        emailCompany = jobDatabase.get('email');
+        emailCompany = jobDatabase.get('Email');
         locationCompany = jobDatabase.get('address');
         applicants = jobDatabase.get('applicants');
-        postedDateTimeStamp = jobDatabase.get('created');
+        postedDateTimeStamp = jobDatabase.get('CreatedAt');
         deadlineDateTimeStamp = jobDatabase.get('deadline_timestamp');
         deadlineDate = jobDatabase.get('deadline_date');
         var postDate = postedDateTimeStamp!.toDate();
@@ -541,8 +541,8 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                                           .currentUser!
                                                           .uid,
                                                       'commentId': _generatedId,
-                                                      'name': name,
-                                                      'user_image': user_image,
+                                                      'Name': name,
+                                                      'PhotoUrl': user_image,
                                                       'commentBody':
                                                           _commentController
                                                               .text,
@@ -661,13 +661,13 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                                 .data!['comments'][index]['id'],
                                             commenterName:
                                                 snapshot.data!['comments']
-                                                    [index]['name'],
+                                                    [index]['Name'],
                                             commentBody:
                                                 snapshot.data!['comments']
                                                     [index]['commentBody'],
                                             commenterImageUrl:
                                                 snapshot.data!['comments']
-                                                    [index]['user_image']);
+                                                    [index]['PhotoUrl']);
                                       },
                                       separatorBuilder: (context, index) {
                                         return const Divider(

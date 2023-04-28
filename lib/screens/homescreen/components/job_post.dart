@@ -503,16 +503,16 @@ class _UploadState extends State<Upload> {
     });
     setState(() {
       _isLoading = true;
-      user_image = userDoc.get('user_image');
+      user_image = userDoc.get('PhotoUrl');
     });
     try {
       await FirebaseFirestore.instance.collection('jobPosted').doc(jobID).set({
         'job_id': jobID,
-        'created': Timestamp.now(),
+        'CreatedAt': Timestamp.now(),
         'id': uid,
-        'user_image': user_image,
-        'name': name,
-        'email': user.email,
+        'PhotoUrl': user_image,
+        'Name': name,
+        'Email': user.email,
         'address': address,
         'category': _jobCategoryController.text,
         'title': _jobTitleController.text,
@@ -561,8 +561,8 @@ class _UploadState extends State<Upload> {
         .get();
     setState(() {
       id = userDoc.get('id');
-      name = userDoc.get('name');
-      user_image = userDoc.get('user_image');
+      name = userDoc.get('Name');
+      user_image = userDoc.get('PhotoUrl');
       address = userDoc.get('address');
     });
   }

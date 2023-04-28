@@ -37,11 +37,11 @@ class _ProfilePageState extends State<ProfilePage> {
         return;
       } else {
         setState(() {
-          email = userDoc.get('email');
-          name = userDoc.get('name');
-          phoneNumber = userDoc.get('phone_number');
-          imageUrl = userDoc.get('user_image');
-          Timestamp joinedAtTimeStamp = userDoc.get('created');
+          email = userDoc.get('Email');
+          name = userDoc.get('Name');
+          phoneNumber = userDoc.get('Phone');
+          imageUrl = userDoc.get('PhotoUrl');
+          Timestamp joinedAtTimeStamp = userDoc.get('CreatedAt');
           var joinedDate = joinedAtTimeStamp.toDate();
           joinedAt = '${joinedDate.year}-${joinedDate.month}-${joinedDate.day}';
         });

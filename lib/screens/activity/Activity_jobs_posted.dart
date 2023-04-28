@@ -25,8 +25,8 @@ class _postedState extends State<posted> {
         .get();
 
     setState(() {
-      nameForposted = userDoc.get('name');
-      userImageForPosted = userDoc.get('user_image');
+      nameForposted = userDoc.get('Name');
+      userImageForPosted = userDoc.get('PhotoUrl');
       addressForposted = userDoc.get('address');
     });
   }
@@ -47,7 +47,7 @@ class _postedState extends State<posted> {
         stream: FirebaseFirestore.instance
             .collection('jobPosted')
             .where('id', isEqualTo: uid)
-            .orderBy('created', descending: true)
+            .orderBy('CreatedAt', descending: true)
             .snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -66,11 +66,11 @@ class _postedState extends State<posted> {
                     itemBuilder: (BuildContext context, int index) {
                       return Job(
                         jobID: snapshot.data.docs[index]['job_id'],
-                        contactName: snapshot.data.docs[index]['name'],
-                        contactImage: snapshot.data.docs[index]['user_image'],
+                        contactName: snapshot.data.docs[index]['Name'],
+                        contactImage: snapshot.data.docs[index]['PhotoUrl'],
                         jobTitle: snapshot.data.docs[index]['title'],
                         uploadedBy: snapshot.data.docs[index]['id'],
-                        date: snapshot.data.docs[index]['created'].toDate(),
+                        date: snapshot.data.docs[index]['CreatedAt'].toDate(),
                         type: snapshot.data.docs[index]['id'] == uid
                             ? 'posted'
                             : 'taken',
