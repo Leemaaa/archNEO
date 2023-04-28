@@ -1,12 +1,18 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 
 import '../../utils/global_variables.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class CallPage extends StatefulWidget {
   /// non-modifiable channel name of the page
@@ -15,8 +21,10 @@ class CallPage extends StatefulWidget {
   /// non-modifiable client role of the page
   final ClientRole? role;
 
+  final String? userID;
+
   /// Creates a call page with given channel name.
-  const CallPage({Key? key, this.channelName, this.role}) : super(key: key);
+  const CallPage({Key? key, this.channelName, this.role, this.userID}) : super(key: key);
 
   @override
   _CallPageState createState() => _CallPageState();
@@ -36,6 +44,42 @@ class _CallPageState extends State<CallPage> {
     super.dispose();
   }
 
+  void getUserData() async {
+    final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('architects')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    setState(() {
+      id = userDoc.get('id');
+      name = userDoc.get('Name');
+    });
+  }
+
+  void generateUid() {
+    Random random = Random();
+    int min = 100000;
+    int max = 999999;
+    guid =  min + random.nextInt(max - min);
+  }
+
+  Future<void> _fetchData() async {
+    uri = 'https://archneo-token-server.herokuapp.com/rtc/'+ widget.channelName! + '/publisher/userAccount/'+ guid.toString() +'/';
+    print(uri);
+    var url = Uri.parse(uri!);
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      setState(() {
+        final data = json.decode(response.body);
+        setState(() {
+          token = data['rtcToken'];
+        });
+      });
+    } else {
+      throw Exception('Failed to fetch data');
+    }
+
+  }
+
   Future<void> _dispose() async {
     // destroy sdk
     await _engine.leaveChannel();
@@ -45,6 +89,7 @@ class _CallPageState extends State<CallPage> {
   @override
   void initState() {
     super.initState();
+    generateUid();
     // initialize agora sdk
     initialize();
   }
@@ -60,12 +105,16 @@ class _CallPageState extends State<CallPage> {
       return;
     }
 
+    await _fetchData();
+
+    print("token: $token");
+
     await _initAgoraRtcEngine();
     _addAgoraEventHandlers();
     VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
     configuration.dimensions = VideoDimensions(width: 1920, height: 1080);
     await _engine.setVideoEncoderConfiguration(configuration);
-    await _engine.joinChannel(token, widget.channelName!, null, 0);
+    await _engine.joinChannel(token, widget.channelName!, null, guid!);
   }
 
   /// Create agora sdk instance and initialize

@@ -22,13 +22,14 @@ List<String> eventSubjects = [
 ];
 
 const String appId = "30634a79a6b54d5da04faea54f0a9b1a";
-const String token =
-    "007eJxTYDBdevWwUOTzvDt2Bip5F54vK72+IUZ5xafvGS09M68EBocqMBgbmBmbJJpbJpolmZqkmKYkGpikJaYmmpqkGSRaJhkmpi7xTmkIZGT4Pn0yCyMDBIL4LAzJ+XlpDAwA5osh1A==";
+String? token;
 
 String? name;
 String? user_image;
 String? venue;
 String? id;
+String? uri;
+int? guid;
 
 String? avatarURL;
 NetworkImage? avatarImage;

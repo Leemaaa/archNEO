@@ -134,7 +134,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
             icon: const Icon(Icons.close_sharp, size: 30, color: Colors.black),
             onPressed: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const Homescreen()));
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
             }),
         title: const Text(
           "Event Details",

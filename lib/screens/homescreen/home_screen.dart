@@ -3,25 +3,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:freelance_app/screens/activity/activity.dart';
 
-import 'package:freelance_app/screens/homescreen/components/categories.dart';
 import 'package:freelance_app/screens/profile/profile.dart';
-import 'package:freelance_app/screens/videocalls/video_call.dart';
+import 'package:freelance_app/screens/conference/conference.dart';
 import 'package:freelance_app/utils/colors.dart';
 import 'package:freelance_app/screens/homescreen/components/posted_events.dart';
 import 'package:freelance_app/screens/homescreen/sidebar.dart';
 import 'package:freelance_app/screens/search/search_screen.dart';
-import 'package:uuid/uuid.dart';
 
 import 'components/event.dart';
 
-class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<Homescreen> createState() => _HomescreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomescreenState extends State<Homescreen> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -65,7 +63,9 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       body: <Widget>[
         const Homepage(),
         const Search(),
-        VideoCallPage(),
+        VideoCallPage(
+          userID: _uid,
+        ),
         const JobsActivity(),
         ProfilePage(
           userID: _uid,
@@ -148,7 +148,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                 color: Colors.white,
               ),
               title: Text(
-                "Video Call",
+                "Conf",
                 style: TextStyle(color: Colors.white, fontSize: 16),
               )),
           BubbleBottomBarItem(

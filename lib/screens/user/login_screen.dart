@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Homescreen()));
+                                builder: (context) => const HomeScreen()));
                       }
                     } on FirebaseException catch (e) {
                       debugPrint("error is ${e.message}");

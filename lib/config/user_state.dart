@@ -14,7 +14,7 @@ class UserState extends StatelessWidget {
         if (userSnapshot.data == null) {
           return const OnBoardingPage();
         } else if (userSnapshot.hasData) {
-          return const Homescreen();
+          return const HomeScreen();
         } else if (userSnapshot.hasError) {
           return const Scaffold(
             body: Center(
