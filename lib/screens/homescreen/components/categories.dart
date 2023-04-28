@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:freelance_app/screens/homescreen/components/posted_jobs.dart';
+import 'package:freelance_app/screens/homescreen/components/posted_events.dart';
 
 class Category extends StatefulWidget {
   //final cata = const Postedjob();

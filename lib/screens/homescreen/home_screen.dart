@@ -7,12 +7,12 @@ import 'package:freelance_app/screens/homescreen/components/categories.dart';
 import 'package:freelance_app/screens/profile/profile.dart';
 import 'package:freelance_app/screens/videocalls/video_call.dart';
 import 'package:freelance_app/utils/colors.dart';
-import 'package:freelance_app/screens/homescreen/components/posted_jobs.dart';
+import 'package:freelance_app/screens/homescreen/components/posted_events.dart';
 import 'package:freelance_app/screens/homescreen/sidebar.dart';
 import 'package:freelance_app/screens/search/search_screen.dart';
 import 'package:uuid/uuid.dart';
 
-import 'components/job_post.dart';
+import 'components/event.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -238,7 +238,7 @@ class _HomepageState extends State<Homepage> {
             SizedBox(
               height: 10,
             ),
-            Postedjob(),
+            Events(),
             //Bottomnavbar(),
           ],
         ),

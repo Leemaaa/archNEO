@@ -18,19 +18,19 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
-  final _uploadJobFormKey = GlobalKey<FormState>();
+  final _uploadEventFormKey = GlobalKey<FormState>();
 
-  final TextEditingController _jobCategoryController = TextEditingController();
-  final FocusNode _jobCategoryFocusNode = FocusNode();
+  final TextEditingController _eventSubjectController = TextEditingController();
+  final FocusNode _eventSubjectFocusNode = FocusNode();
 
-  final TextEditingController _jobTitleController = TextEditingController();
-  final FocusNode _jobTitleFocusNode = FocusNode();
+  final TextEditingController _eventTitleController = TextEditingController();
+  final FocusNode _eventTitleFocusNode = FocusNode();
 
-  final TextEditingController _jobDescController = TextEditingController();
-  final FocusNode _jobDescFocusNode = FocusNode();
+  final TextEditingController _eventDescController = TextEditingController();
+  final FocusNode _eventDescFocusNode = FocusNode();
 
-  final TextEditingController _jobDeadlineController = TextEditingController();
-  final FocusNode _jobDeadlineFocusNode = FocusNode();
+  final TextEditingController _eventDeadlineController = TextEditingController();
+  final FocusNode _eventDeadlineFocusNode = FocusNode();
   DateTime? selectedDeadline;
   Timestamp? deadlineDateTimeStamp;
 
@@ -38,14 +38,14 @@ class _UploadState extends State<Upload> {
 
   @override
   void dispose() {
-    _jobCategoryController.dispose();
-    _jobCategoryFocusNode.dispose();
-    _jobTitleController.dispose();
-    _jobTitleFocusNode.dispose();
-    _jobDescController.dispose();
-    _jobDescFocusNode.dispose();
-    _jobDeadlineController.dispose();
-    _jobDeadlineFocusNode.dispose();
+    _eventSubjectController.dispose();
+    _eventSubjectFocusNode.dispose();
+    _eventTitleController.dispose();
+    _eventTitleFocusNode.dispose();
+    _eventDescController.dispose();
+    _eventDescFocusNode.dispose();
+    _eventDeadlineController.dispose();
+    _eventDeadlineFocusNode.dispose();
     super.dispose();
   }
 
@@ -99,23 +99,23 @@ class _UploadState extends State<Upload> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              'Job Description',
+                              'Event Description',
                               style: txt.titleDark,
                             ),
                           ),
                         ),
                         Form(
-                          key: _uploadJobFormKey,
+                          key: _uploadEventFormKey,
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _jobCategoryFormField(),
-                                _jobTitleFormField(),
-                                _jobDescFormField(),
+                                _eventSubjectFormField(),
+                                _eventTitleFormField(),
+                                _eventDescFormField(),
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       bottom: layout.padding),
-                                  child: _jobDeadlineFormField(),
+                                  child: _eventDeadlineFormField(),
                                 ),
                               ]),
                         ),
@@ -131,7 +131,7 @@ class _UploadState extends State<Upload> {
                                   left: layout.padding,
                                   right: layout.padding,
                                 ),
-                                child: _uploadJobButton(),
+                                child: _uploadEventButton(),
                               ),
                       ]),
                 ),
@@ -143,24 +143,24 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  Widget _jobCategoryFormField() {
+  Widget _eventSubjectFormField() {
     return GestureDetector(
       onTap: () {
-        _showJobCategoriesDialog();
+        _showEventsSubjectsDialog();
       },
       child: TextFormField(
         enabled: false,
-        focusNode: _jobCategoryFocusNode,
+        focusNode: _eventSubjectFocusNode,
         autofocus: false,
-        controller: _jobCategoryController,
+        controller: _eventSubjectController,
         style: txt.fieldDark,
         maxLines: 1,
         maxLength: 100,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.next,
-        onEditingComplete: () => _jobTitleFocusNode.requestFocus(),
+        onEditingComplete: () => _eventTitleFocusNode.requestFocus(),
         decoration: InputDecoration(
-          labelText: 'Select job category',
+          labelText: 'Select event subject',
           labelStyle: txt.labelDark,
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           floatingLabelStyle: txt.floatingLabelDark,
@@ -190,18 +190,18 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  Widget _jobTitleFormField() {
+  Widget _eventTitleFormField() {
     return TextFormField(
       enabled: true,
-      focusNode: _jobTitleFocusNode,
+      focusNode: _eventTitleFocusNode,
       autofocus: false,
-      controller: _jobTitleController,
+      controller: _eventTitleController,
       style: txt.fieldDark,
       maxLines: 1,
       maxLength: 100,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
-      onEditingComplete: () => _jobDescFocusNode.requestFocus(),
+      onEditingComplete: () => _eventDescFocusNode.requestFocus(),
       decoration: InputDecoration(
         labelText: 'Title',
         labelStyle: txt.labelDark,
@@ -234,18 +234,18 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  Widget _jobDescFormField() {
+  Widget _eventDescFormField() {
     return TextFormField(
       enabled: true,
-      focusNode: _jobDescFocusNode,
+      focusNode: _eventDescFocusNode,
       autofocus: false,
-      controller: _jobDescController,
+      controller: _eventDescController,
       style: txt.fieldDark,
       maxLines: 3,
       maxLength: 300,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
-      onEditingComplete: () => _jobDescFocusNode.unfocus(),
+      onEditingComplete: () => _eventDescFocusNode.unfocus(),
       decoration: InputDecoration(
         labelText: 'Description',
         labelStyle: txt.labelDark,
@@ -278,22 +278,22 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  Widget _jobDeadlineFormField() {
+  Widget _eventDeadlineFormField() {
     return GestureDetector(
       onTap: () {
         _selectDeadlineDialog();
       },
       child: TextFormField(
         enabled: false,
-        focusNode: _jobDeadlineFocusNode,
+        focusNode: _eventDeadlineFocusNode,
         autofocus: false,
-        controller: _jobDeadlineController,
+        controller: _eventDeadlineController,
         style: txt.fieldDark,
         maxLines: 1,
         maxLength: 100,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.done,
-        onEditingComplete: () => _jobDeadlineFocusNode.unfocus(),
+        onEditingComplete: () => _eventDeadlineFocusNode.unfocus(),
         decoration: InputDecoration(
           labelText: 'Select deadline date',
           labelStyle: txt.labelDark,
@@ -327,10 +327,10 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  Widget _uploadJobButton() {
+  Widget _uploadEventButton() {
     return MaterialButton(
       onPressed: () {
-        _uploadJob();
+        _uploadEvent();
       },
       elevation: layout.elevation,
       color: clr.primary,
@@ -344,7 +344,7 @@ class _UploadState extends State<Upload> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: const [
               Text(
-                'Upload Job   ',
+                'Upload Event   ',
                 style: txt.button,
               ),
               Icon(
@@ -357,7 +357,7 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  _showJobCategoriesDialog() {
+  _showEventsSubjectsDialog() {
     Size size = MediaQuery.of(context).size;
     showDialog(
       context: context,
@@ -370,7 +370,7 @@ class _UploadState extends State<Upload> {
                 bottom: layout.padding,
               ),
               child: Text(
-                'Job Categories',
+                'Event Subjects',
                 textAlign: TextAlign.center,
                 style: txt.titleLight.copyWith(color: clr.passiveLight),
               ),
@@ -379,18 +379,18 @@ class _UploadState extends State<Upload> {
               width: size.width * 0.9,
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: jobCategories.length,
+                itemCount: eventSubjects.length,
                 itemBuilder: ((context, index) {
                   return InkWell(
                     onTap: () {
                       setState(() {
-                        _jobCategoryController.text = jobCategories[index];
+                        _eventSubjectController.text = eventSubjects[index];
                         Navigator.pop(context);
                       });
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
-                        bottom: index != jobCategories.length - 1
+                        bottom: index != eventSubjects.length - 1
                             ? layout.padding
                             : 0,
                       ),
@@ -406,7 +406,7 @@ class _UploadState extends State<Upload> {
                               left: layout.padding * 1.25,
                             ),
                             child: Text(
-                              jobCategories[index],
+                              eventSubjects[index],
                               style: txt.body2Light
                                   .copyWith(color: clr.passiveLight),
                             ),
@@ -422,7 +422,7 @@ class _UploadState extends State<Upload> {
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                 InkWell(
                   onTap: () {
-                    _jobCategoryController.text = '';
+                    _eventSubjectController.text = '';
                     Navigator.canPop(context) ? Navigator.pop(context) : null;
                   },
                   child: Padding(
@@ -459,34 +459,34 @@ class _UploadState extends State<Upload> {
     if (selectedDeadline != null) {
       setState(
         () {
-          _jobDeadlineController.text =
+          _eventDeadlineController.text =
               '${selectedDeadline!.year} - ${selectedDeadline!.month} - ${selectedDeadline!.day}';
           deadlineDateTimeStamp = Timestamp.fromMicrosecondsSinceEpoch(
               selectedDeadline!.microsecondsSinceEpoch);
         },
       );
     } else {
-      _jobDeadlineController.text = '';
+      _eventDeadlineController.text = '';
       deadlineDateTimeStamp = null;
     }
   }
 
-  void _uploadJob() async {
+  void _uploadEvent() async {
     getUserData();
-    final jobID = const Uuid().v4();
+    final eventID = const Uuid().v4();
     User? user = FirebaseAuth.instance.currentUser;
     final uid = user!.uid;
     final DocumentSnapshot userDoc = await FirebaseFirestore.instance
-        .collection('users')
+        .collection('architects')
         .doc(widget.userID)
         .get();
     //final isValid = _uploadJobFormKey.currentState!.validate();
 
     // if (isValid) {
-    if (_jobCategoryController.text == '' ||
-        _jobTitleController.text == '' ||
-        _jobDescController.text == '' ||
-        _jobDeadlineController.text == '') {
+    if (_eventSubjectController.text == '' ||
+        _eventTitleController.text == '' ||
+        _eventDescController.text == '' ||
+        _eventDeadlineController.text == '') {
       GlobalMethod.showErrorDialog(
         context: context,
         icon: Icons.error,
@@ -506,35 +506,35 @@ class _UploadState extends State<Upload> {
       user_image = userDoc.get('PhotoUrl');
     });
     try {
-      await FirebaseFirestore.instance.collection('jobPosted').doc(jobID).set({
-        'job_id': jobID,
+      await FirebaseFirestore.instance.collection('events').doc(eventID).set({
+        'EventID': eventID,
         'CreatedAt': Timestamp.now(),
-        'id': uid,
+        'ID': uid,
         'PhotoUrl': user_image,
         'Name': name,
         'Email': user.email,
-        'address': address,
-        'category': _jobCategoryController.text,
-        'title': _jobTitleController.text,
-        'desc': _jobDescController.text,
-        'deadline_date': _jobDeadlineController.text,
-        'deadline_timestamp': deadlineDateTimeStamp,
-        'recruiting': true,
-        'applicants': 0,
-        'comments': [],
-        'applicantsList': [],
+        'Venue': venue,
+        'Subjects': _eventSubjectController.text,
+        'Title': _eventTitleController.text,
+        'Description': _eventDescController.text,
+        'DeadlineDate': _eventDeadlineController.text,
+        'DeadlineTimestamp': deadlineDateTimeStamp,
+        'Recruiting': true,
+        'Applicants': 0,
+        'Comments': [],
+        'ApplicantsList': [],
       });
       await Fluttertoast.showToast(
-        msg: 'The job has been successfully uploaded.',
+        msg: 'The event has been successfully uploaded.',
         toastLength: Toast.LENGTH_LONG,
         backgroundColor: Colors.black54,
         fontSize: txt.textSizeDefault,
       );
       setState(() {
-        _jobCategoryController.clear();
-        _jobTitleController.clear();
-        _jobDescController.clear();
-        _jobDeadlineController.clear();
+        _eventSubjectController.clear();
+        _eventTitleController.clear();
+        _eventDescController.clear();
+        _eventDeadlineController.clear();
       });
     } catch (error) {
       setState(() {
@@ -556,43 +556,16 @@ class _UploadState extends State<Upload> {
 
   void getUserData() async {
     final DocumentSnapshot userDoc = await FirebaseFirestore.instance
-        .collection('users')
+        .collection('architects')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     setState(() {
       id = userDoc.get('id');
       name = userDoc.get('Name');
       user_image = userDoc.get('PhotoUrl');
-      address = userDoc.get('address');
+      venue = userDoc.get('address');
     });
   }
-}
-
-class Persistent {
-  static List<String> jobsList = [
-    'Mobile developer',
-    'Game Developer',
-    'Web designer',
-    'HR Manager',
-    'Manager',
-    'Team Leader',
-    'Designer',
-    'Full stack developer',
-    'Marketing',
-    'Digital marketing',
-  ];
-
-  static List<String> jobCategoryList = [
-    'Architecture and Construction',
-    'Education and Training',
-    'Development - Programming',
-    'Business',
-    'Information Technology',
-    'Human resources',
-    'Marketing',
-    'Design',
-    'Accounting',
-  ];
 }
 
 BoxDecoration boxDecorationGradient() {

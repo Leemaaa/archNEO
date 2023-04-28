@@ -12,16 +12,13 @@ String forgetPasswordUrlImage =
 String imageprofile =
     'https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png';
 
-List<String> jobCategories = [
-  'Architecture and Construction',
-  'Education and Training',
-  'Development - Programming',
-  'Business',
-  'Information Technology',
-  'Human Resources',
-  'Marketing',
-  'Design',
-  'Accounting',
+List<String> eventSubjects = [
+  'architecture',
+  'design',
+  'future',
+  'urban',
+  'sustainable',
+  'art',
 ];
 
 const String appId = "30634a79a6b54d5da04faea54f0a9b1a";
@@ -30,7 +27,7 @@ const String token =
 
 String? name;
 String? user_image;
-String? address;
+String? venue;
 String? id;
 
 String? avatarURL;

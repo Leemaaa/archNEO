@@ -2,41 +2,41 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:freelance_app/screens/homescreen/components/job_details.dart';
+import 'package:freelance_app/screens/homescreen/components/event_details.dart';
 import 'package:freelance_app/utils/global_methods.dart';
 
 import '../utils/clr.dart';
 import '../utils/layout.dart';
 import "../utils/txt.dart";
 
-class JobTile extends StatefulWidget {
-  final String jobID;
-  final String jobTitle;
-  final String jobDesc;
+class Event extends StatefulWidget {
+  final String eventID;
+  final String eventTitle;
+  final String eventDesc;
   final String uploadedBy;
   final String contactName;
   final String contactImage;
   final String contactEmail;
-  final String jobLocation;
-  final bool recruiting;
+  final String eventVenue;
+  final bool isActive;
 
-  const JobTile({
-    required this.jobID,
-    required this.jobTitle,
-    required this.jobDesc,
+  const Event({
+    required this.eventID,
+    required this.eventTitle,
+    required this.eventDesc,
     required this.uploadedBy,
     required this.contactName,
     required this.contactImage,
     required this.contactEmail,
-    required this.jobLocation,
-    required this.recruiting,
+    required this.eventVenue,
+    required this.isActive,
   });
 
   @override
-  State<JobTile> createState() => _JobTileState();
+  State<Event> createState() => _EventState();
 }
 
-class _JobTileState extends State<JobTile> {
+class _EventState extends State<Event> {
   final _auth = FirebaseAuth.instance;
 
   @override
@@ -56,9 +56,9 @@ class _JobTileState extends State<JobTile> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => JobDetailsScreen(
+                    builder: (context) => EventDetailsScreen(
                           id: widget.uploadedBy,
-                          job_id: widget.jobID,
+                          eventID: widget.eventID,
                         )));
           },
           onLongPress: () {
@@ -78,7 +78,7 @@ class _JobTileState extends State<JobTile> {
           title: Padding(
             padding: const EdgeInsets.only(bottom: layout.padding / 4),
             child: Text(
-              widget.jobTitle,
+              widget.eventTitle,
               style: txt.subTitleDark,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -100,7 +100,7 @@ class _JobTileState extends State<JobTile> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: layout.padding / 4),
                   child: Text(
-                    widget.jobDesc,
+                    widget.eventDesc,
                     style: txt.body1Dark,
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
@@ -128,7 +128,7 @@ class _JobTileState extends State<JobTile> {
             padding: const EdgeInsets.all(layout.padding),
             child: Column(children: [
               const Text(
-                'Are you sure you want to delete this job?',
+                'Are you sure you want to delete this event?',
                 style: txt.subTitleDark,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
@@ -148,13 +148,13 @@ class _JobTileState extends State<JobTile> {
         try {
           if (widget.uploadedBy == uid) {
             await FirebaseFirestore.instance
-                .collection('jobPosted')
-                .doc(widget.jobID)
+                .collection('events')
+                .doc(widget.eventID)
                 .delete();
             Navigator.canPop(context) ? Navigator.pop(context) : null;
             Navigator.canPop(context) ? Navigator.pop(context) : null;
             await Fluttertoast.showToast(
-              msg: 'The job has been successfully deleted',
+              msg: 'The event has been successfully deleted',
               toastLength: Toast.LENGTH_LONG,
               backgroundColor: clr.passive,
               fontSize: txt.textSizeDefault,
@@ -167,7 +167,7 @@ class _JobTileState extends State<JobTile> {
               icon: Icons.verified_user,
               iconColor: clr.primary,
               title: 'Unable to delete',
-              body: 'Only the user who created the job can delete it',
+              body: 'Only the user who created the event can delete it',
               buttonText: 'OK',
             );
           }
@@ -177,7 +177,7 @@ class _JobTileState extends State<JobTile> {
             icon: Icons.error,
             iconColor: clr.error,
             title: 'Error',
-            body: 'Unable to delete job',
+            body: 'Unable to delete event',
             buttonText: 'OK',
           );
         } finally {}

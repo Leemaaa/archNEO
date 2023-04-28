@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:freelance_app/screens/homescreen/components/posted_jobs.dart';
+import 'package:freelance_app/screens/homescreen/components/posted_events.dart';
 import 'package:freelance_app/screens/homescreen/home_screen.dart';
 import 'package:freelance_app/utils/global_methods.dart';
 import 'package:freelance_app/utils/global_variables.dart';
@@ -10,25 +10,25 @@ import 'package:freelance_app/widgets/comments_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
-class JobDetailsScreen extends StatefulWidget {
-  const JobDetailsScreen({super.key, required this.id, required this.job_id});
+class EventDetailsScreen extends StatefulWidget {
+  const EventDetailsScreen({super.key, required this.id, required this.eventID});
   final String id;
-  final String job_id;
+  final String eventID;
 
   @override
-  _JobDetailsScreenState createState() => _JobDetailsScreenState();
+  _EventDetailsScreenState createState() => _EventDetailsScreenState();
 }
 
-class _JobDetailsScreenState extends State<JobDetailsScreen> {
+class _EventDetailsScreenState extends State<EventDetailsScreen> {
   final TextEditingController _commentController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool _isCommenting = false;
   String? authorName;
   String? userImageUrl;
-  String? jobCategory;
-  String? jobDescription;
-  String? jobTitle;
-  bool? recruitment;
+  String? eventSubjects;
+  String? eventDescription;
+  String? eventTitle;
+  bool? recruiting;
   Timestamp? postedDateTimeStamp;
   Timestamp? deadlineDateTimeStamp;
   String? postedDate;
@@ -50,7 +50,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
       scheme: 'mailto',
       path: emailCompany,
       query:
-          'subject=Applying for $jobTitle&body=Hello, please attach Resume CV file',
+          'subject=Applying for $eventTitle&body=Hello, please attach Resume CV file',
     );
     final url = params; //removed toString
     launchUrl(url);
@@ -60,25 +60,25 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   void addNewApplicant() async {
     final _generatedId = const Uuid().v4();
     await FirebaseFirestore.instance
-        .collection('jobPosted')
-        .doc(widget.job_id)
+        .collection('events')
+        .doc(widget.eventID)
         .update({
-      'applicantsList': FieldValue.arrayUnion([
-        {
-          'id': FirebaseAuth.instance.currentUser!.uid,
-          'applicantsId': widget.job_id,
-          'Name': authorName,
-          'PhotoUrl': user_image,
-          //'commentBody': _commentController.text,
-          'timeapplied': Timestamp.now(),
-        }
+          'ApplicantsList': FieldValue.arrayUnion([
+            {
+              'ID': FirebaseAuth.instance.currentUser!.uid,
+              'ApplicantsId': widget.eventID,
+              'Name': authorName,
+              'PhotoUrl': user_image,
+              //'commentBody': _commentController.text,
+              'timeapplied': Timestamp.now(),
+            }
       ]),
     });
     var docRef =
-        FirebaseFirestore.instance.collection('jobPosted').doc(widget.job_id);
+        FirebaseFirestore.instance.collection('events').doc(widget.eventID);
 
     docRef.update({
-      "applicants": applicants + 1,
+      "Applicants": applicants + 1,
     });
 
     Navigator.pop(context);
@@ -86,7 +86,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
 
   void getJobData() async {
     final DocumentSnapshot userDoc = await FirebaseFirestore.instance
-        .collection('users')
+        .collection('architects')
         .doc(widget.id)
         .get();
 
@@ -98,23 +98,23 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
         userImageUrl = userDoc.get('PhotoUrl');
       });
     }
-    final DocumentSnapshot jobDatabase = await FirebaseFirestore.instance
-        .collection('jobPosted')
-        .doc(widget.job_id)
+    final DocumentSnapshot eventDatabase = await FirebaseFirestore.instance
+        .collection('events')
+        .doc(widget.eventID)
         .get();
-    if (jobDatabase == null) {
+    if (eventDatabase == null) {
       return;
     } else {
       setState(() {
-        jobTitle = jobDatabase.get('title');
-        jobDescription = jobDatabase.get('desc');
-        recruitment = jobDatabase.get('recruiting');
-        emailCompany = jobDatabase.get('Email');
-        locationCompany = jobDatabase.get('address');
-        applicants = jobDatabase.get('applicants');
-        postedDateTimeStamp = jobDatabase.get('CreatedAt');
-        deadlineDateTimeStamp = jobDatabase.get('deadline_timestamp');
-        deadlineDate = jobDatabase.get('deadline_date');
+        eventTitle = eventDatabase.get('Title');
+        eventDescription = eventDatabase.get('Description');
+        recruiting = eventDatabase.get('Recruiting');
+        emailCompany = eventDatabase.get('Email');
+        locationCompany = eventDatabase.get('Venue');
+        applicants = eventDatabase.get('Applicants');
+        postedDateTimeStamp = eventDatabase.get('CreatedAt');
+        deadlineDateTimeStamp = eventDatabase.get('DeadlineTimestamp');
+        deadlineDate = eventDatabase.get('DeadlineDate');
         var postDate = postedDateTimeStamp!.toDate();
         postedDate = '${postDate.year}-${postDate.month}-${postDate.day}';
       });
@@ -137,7 +137,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   MaterialPageRoute(builder: (context) => const Homescreen()));
             }),
         title: const Text(
-          "Job Details",
+          "Event Details",
           style: TextStyle(
             fontSize: 20,
             color: Colors.black,
@@ -161,7 +161,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 4),
                         child: Text(
-                          jobTitle == null ? '' : jobTitle!,
+                          eventTitle == null ? '' : eventTitle!,
                           maxLines: 3,
                           style: const TextStyle(
                               color: Colors.black,
@@ -272,9 +272,9 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                         if (_uid == widget.id) {
                                           try {
                                             FirebaseFirestore.instance
-                                                .collection('jobPosted')
-                                                .doc(widget.job_id)
-                                                .update({'recruitment': true});
+                                                .collection('events')
+                                                .doc(widget.eventID)
+                                                .update({'Recruitment': true});
                                           } catch (err) {
                                             GlobalMethodTwo.showErrorDialog(
                                                 error:
@@ -299,7 +299,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       ),
                                     ),
                                     Opacity(
-                                      opacity: recruitment == true ? 1 : 0,
+                                      opacity: recruiting == true ? 1 : 0,
                                       child: const Icon(
                                         Icons.check_box,
                                         color: Colors.green,
@@ -315,9 +315,9 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                         if (_uid == widget.id) {
                                           try {
                                             FirebaseFirestore.instance
-                                                .collection('jobPosted')
-                                                .doc(widget.job_id)
-                                                .update({'recruitment': false});
+                                                .collection('events')
+                                                .doc(widget.eventID)
+                                                .update({'Recruitment': false});
                                           } catch (err) {
                                             GlobalMethodTwo.showErrorDialog(
                                                 error:
@@ -342,7 +342,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       ),
                                     ),
                                     Opacity(
-                                      opacity: recruitment == false ? 1 : 0,
+                                      opacity: recruiting == false ? 1 : 0,
                                       child: const Icon(
                                         Icons.check_box,
                                         color: Colors.red,
@@ -354,7 +354,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             ),
                       dividerWidget(),
                       const Text(
-                        'Job Description:',
+                        'Event Description:',
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.black,
@@ -364,7 +364,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                         height: 10,
                       ),
                       Text(
-                        jobDescription == null ? '' : jobDescription!,
+                        eventDescription == null ? '' : eventDescription!,
                         textAlign: TextAlign.justify,
                         style: const TextStyle(
                           fontSize: 14,
@@ -530,23 +530,23 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                                 final _generatedId =
                                                     const Uuid().v4();
                                                 await FirebaseFirestore.instance
-                                                    .collection('jobPosted')
-                                                    .doc(widget.job_id)
+                                                    .collection('events')
+                                                    .doc(widget.eventID)
                                                     .update({
-                                                  'comments':
+                                                  'Comments':
                                                       FieldValue.arrayUnion([
                                                     {
-                                                      'id': FirebaseAuth
+                                                      'ID': FirebaseAuth
                                                           .instance
                                                           .currentUser!
                                                           .uid,
-                                                      'commentId': _generatedId,
+                                                      'CommentId': _generatedId,
                                                       'Name': name,
                                                       'PhotoUrl': user_image,
-                                                      'commentBody':
+                                                      'CommentBody':
                                                           _commentController
                                                               .text,
-                                                      'time': Timestamp.now(),
+                                                      'Time': Timestamp.now(),
                                                     }
                                                   ]),
                                                 });
@@ -634,8 +634,8 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                               padding: const EdgeInsets.all(16.0),
                               child: FutureBuilder<DocumentSnapshot>(
                                 future: FirebaseFirestore.instance
-                                    .collection('jobPosted')
-                                    .doc(widget.job_id)
+                                    .collection('events')
+                                    .doc(widget.eventID)
                                     .get(),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
@@ -643,10 +643,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                     return const Center(
                                         child: CircularProgressIndicator());
                                   } else {
-                                    if (snapshot.data!["comments"] == null) {
+                                    if (snapshot.data!["Comments"] == null) {
                                       const Center(
                                           child:
-                                              Text('No Comment for this job'));
+                                              Text('No Comment for this event'));
                                     }
                                   }
                                   return ListView.separated(
@@ -655,18 +655,18 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       itemBuilder: (context, index) {
                                         return CommentWidget(
                                             commentId:
-                                                snapshot.data!['comments']
-                                                    [index]['commentId'],
+                                                snapshot.data!['Comments']
+                                                    [index]['CommentId'],
                                             commenterId: snapshot
-                                                .data!['comments'][index]['id'],
+                                                .data!['Comments'][index]['ID'],
                                             commenterName:
-                                                snapshot.data!['comments']
+                                                snapshot.data!['Comments']
                                                     [index]['Name'],
                                             commentBody:
-                                                snapshot.data!['comments']
-                                                    [index]['commentBody'],
+                                                snapshot.data!['Comments']
+                                                    [index]['CommentBody'],
                                             commenterImageUrl:
-                                                snapshot.data!['comments']
+                                                snapshot.data!['Comments']
                                                     [index]['PhotoUrl']);
                                       },
                                       separatorBuilder: (context, index) {
@@ -676,7 +676,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                         );
                                       },
                                       itemCount:
-                                          snapshot.data!['comments'].length);
+                                          snapshot.data!['Comments'].length);
                                 },
                               ),
                             ),
