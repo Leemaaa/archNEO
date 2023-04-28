@@ -65,11 +65,11 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       body: <Widget>[
         const Homepage(),
         const Search(),
+        VideoCallPage(),
         const JobsActivity(),
         ProfilePage(
           userID: _uid,
         ),
-        VideoCallPage(),
       ][currentIndex],
       floatingActionButton: currentIndex == 0 || currentIndex == 1
           ? FloatingActionButton(
@@ -119,7 +119,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               color: Colors.white,
             ),
             title: Text(
-              "Home",
+              "Events",
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
@@ -135,6 +135,20 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               ),
               title: Text(
                 "Search",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              )),
+          BubbleBottomBarItem(
+              backgroundColor: Color(0xff187795),
+              icon: Icon(
+                Icons.video_call,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.video_call_outlined,
+                color: Colors.white,
+              ),
+              title: Text(
+                "Video Call",
                 style: TextStyle(color: Colors.white, fontSize: 16),
               )),
           BubbleBottomBarItem(
@@ -163,20 +177,6 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               ),
               title: Text(
                 "Profile",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              )),
-          BubbleBottomBarItem(
-              backgroundColor: Color(0xff187795),
-              icon: Icon(
-                Icons.video_call,
-                color: Colors.black,
-              ),
-              activeIcon: Icon(
-                Icons.video_call_outlined,
-                color: Colors.white,
-              ),
-              title: Text(
-                "VideoCall",
                 style: TextStyle(color: Colors.white, fontSize: 16),
               )),
         ],
@@ -219,14 +219,14 @@ class _HomepageState extends State<Homepage> {
             Padding(
               padding: EdgeInsets.only(left: 15, top: 20),
               child: Text(
-                "Find Your Perfect ",
+                "Find Your Inspiration ",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
             ),
             Padding(
               padding: EdgeInsets.only(left: 15, bottom: 15),
               child: Text(
-                "Design",
+                "Events",
                 style: TextStyle(
                   color: Color(0xffD2A244),
                   fontWeight: FontWeight.w900,

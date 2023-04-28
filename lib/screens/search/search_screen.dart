@@ -4,13 +4,13 @@ import 'package:freelance_app/utils/colors.dart';
 import '../homescreen/sidebar.dart';
 
 class FieldModel {
-  String? job_title;
-  String? company_name;
-  FieldModel(this.job_title, this.company_name);
+  String? eventTitle;
+  String? authorName;
+  FieldModel(this.eventTitle, this.authorName);
 }
 
 class Search extends StatefulWidget {
-  static const routename = "search";
+  static const routeName = "search";
 
   const Search({super.key});
 
@@ -21,19 +21,19 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
 // sample lists for filtering
 
-  static List<FieldModel> main_field_list = [
+  static List<FieldModel> mainFieldList = [
     FieldModel("architecture", "b2b technology"),
     FieldModel("interior design", " Via solution "),
     FieldModel("flutter developer", "Adore Addis "),
     FieldModel("project management", "Rakan Travel Solution"),
   ];
-  List<FieldModel> display_list = List.from(main_field_list);
-  void Updatelist(String value) {
+  List<FieldModel> displayList = List.from(mainFieldList);
+  void updateList(String value) {
 // for filtering the list
     setState(() {
-      display_list = main_field_list
+      displayList = mainFieldList
           .where((element) =>
-              element.job_title!.toLowerCase().contains(value.toLowerCase()))
+              element.eventTitle!.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -64,7 +64,7 @@ class _SearchState extends State<Search> {
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 30.0, top: 40),
-                child: Text("Search For A Job",
+                child: Text("Search For A Event",
                     style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
@@ -76,7 +76,7 @@ class _SearchState extends State<Search> {
               Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child: TextField(
-                  onChanged: (value) => Updatelist(value),
+                  onChanged: (value) => updateList(value),
                   style: TextStyle(color: yellow),
                   decoration: InputDecoration(
                     filled: true,
@@ -105,7 +105,7 @@ class _SearchState extends State<Search> {
               ),
               SizedBox(
                 height: 200,
-                child: display_list.isEmpty
+                child: displayList.isEmpty
                     ? const Center(
                         child: Text("No result found",
                             style: TextStyle(
@@ -114,16 +114,16 @@ class _SearchState extends State<Search> {
                             )))
                     : ListView.builder(
                         scrollDirection: Axis.vertical,
-                        itemCount: display_list.length,
+                        itemCount: displayList.length,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
-                            title: Text('${display_list[index].job_title!}',
+                            title: Text('${displayList[index].eventTitle!}',
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 )),
                             subtitle:
-                                Text('${display_list[index].company_name!}',
+                                Text('${displayList[index].authorName!}',
                                     style: const TextStyle(
                                       fontSize: 15,
                                     )),
