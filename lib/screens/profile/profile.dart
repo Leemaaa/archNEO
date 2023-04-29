@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       _isLoading = true;
       final DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('users')
+          .collection('architects')
           .doc(widget.userID)
           .get();
       if (userDoc == null) {
@@ -123,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               const Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  'Freelancer Information :',
+                                  'Architect Information :',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 22.0),
                                 ),
