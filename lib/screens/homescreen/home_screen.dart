@@ -66,7 +66,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         VideoCallPage(
           userID: _uid,
         ),
-        const JobsActivity(),
+        const Projects(),
         ProfilePage(
           userID: _uid,
         ),
@@ -162,7 +162,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                 color: Colors.white,
               ),
               title: Text(
-                "Activity",
+                "Projects",
                 style: TextStyle(color: Colors.white, fontSize: 16),
               )),
           BubbleBottomBarItem(

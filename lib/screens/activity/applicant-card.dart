@@ -3,18 +3,15 @@ import 'package:intl/intl.dart';
 import 'applicants.dart';
 import 'details.dart';
 
-class Applicant extends StatelessWidget {
+class ProjectCard extends StatelessWidget {
   final String name;
-  //final String title;
-  final DateTime date;
-  final String profilePic;
+  final String desc;
+  final String imageUrl;
 
-  const Applicant(
-      {Key? key,
+  const ProjectCard({Key? key,
       required this.name,
-      // required this.title,
-      required this.date,
-      required this.profilePic})
+      required this.desc,
+      required this.imageUrl})
       : super(key: key);
 
   @override
@@ -25,16 +22,16 @@ class Applicant extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => Scaffold(
               appBar: AppBar(
-                title: Text(name),
+                title: Text('Project'),
               ),
-              body: Center(child: Text('Application')),
+              body: Center(child: Text(name)),
             ),
           ),
         );
       },
       child: Card(
         child: ListTile(
-          leading: Image.network(profilePic),
+          leading: Image.network(imageUrl),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -54,7 +51,7 @@ class Applicant extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               //Text(title),
-              Text(DateFormat.yMMMd().add_jm().format(date)),
+              Text(desc),
             ],
           ),
         ),

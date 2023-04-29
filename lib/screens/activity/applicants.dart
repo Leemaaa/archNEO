@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freelance_app/screens/activity/applicant-card.dart';
-import 'jobs-card.dart';
+import '../../utils/global_variables.dart';
+import 'projects_card.dart';
 import 'package:freelance_app/utils/layout.dart';
 import 'package:freelance_app/utils/txt.dart';
 import 'package:freelance_app/utils/clr.dart';
@@ -9,8 +10,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ApplicantsApp extends StatefulWidget {
-  final String? job_id;
-  const ApplicantsApp({super.key, this.job_id});
+  final String? projectID;
+  const ApplicantsApp({super.key, this.projectID});
 
   @override
   State<ApplicantsApp> createState() => _ApplicantsAppState();
@@ -23,7 +24,7 @@ class _ApplicantsAppState extends State<ApplicantsApp> {
   String? addressForposted;
   void getMyData() async {
     final DocumentSnapshot userDoc = await FirebaseFirestore.instance
-        .collection('users')
+        .collection('architects')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
 
@@ -37,7 +38,20 @@ class _ApplicantsAppState extends State<ApplicantsApp> {
   @override
   void initState() {
     super.initState();
+    getProjectData();
     getMyData();
+  }
+
+  void getProjectData() async {
+    final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('projects')
+        .doc(widget.projectID)
+        .get();
+    setState(() {
+      projectName = userDoc.get('Name');
+      projectDescription = userDoc.get('Description');
+      projectImageUrl = userDoc.get('ProjectImageUrl');
+    });
   }
 
   @override
@@ -61,126 +75,44 @@ class _ApplicantsAppState extends State<ApplicantsApp> {
         ),
       ),
       body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: FutureBuilder<DocumentSnapshot>(
-            future: FirebaseFirestore.instance
-                .collection('jobPosted')
-                .doc(widget.job_id)
-                .get(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else {
-                if (snapshot.data!["applicantsList"] == null) {
-                  const Center(child: Text('No applicant for this job'));
-                }
-              }
-              return ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Applicant(
-                      name: snapshot.data!['applicantsList'][index]['Name'],
-                      //title: snapshot.data.docs[index]['title'],
-                      profilePic: snapshot.data!['applicantsList'][index]
-                          ['PhotoUrl'],
-                      date: snapshot.data!['applicantsList'][index]
-                              ['timeapplied']
-                          .toDate(),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider(
-                      thickness: 1,
-                      color: Colors.grey,
-                    );
-                  },
-                  itemCount: snapshot.data!['applicantsList'].length);
-            },
-          ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                // height: 30,
+                //width: 180,
+                child: Text(
+                  projectName!,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 20),
+               SizedBox(
+                height: 300,
+                //width: 180,
+                child: Image(
+                    image: NetworkImage(projectImageUrl!),
+                    fit: BoxFit.fill),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 300,
+                //width: 180,
+                child: Text(
+                  projectDescription!,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                  ),
+                ),
+              ),
+          ]),
         ),
       ),
     );
   }
 }
-
-
-
-/*
-Container(
-      child: FutureBuilder<DocumentSnapshot>(
-        future: FirebaseFirestore.instance
-            .collection('jobPosted')
-            .doc('job_id')
-            .get(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.connectionState == ConnectionState.active) {
-            if (snapshot.data?.docs.isNotEmpty == true) {
-              return Padding(
-                padding: const EdgeInsets.only(
-                  top: 0,
-                  bottom: layout.padding,
-                  left: layout.padding,
-                  right: layout.padding,
-                ),
-                child: ListView.builder(
-                    itemCount: snapshot.data?.docs.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Applicant(
-                        name: snapshot.data!['applicantsList'][index]['Name'],
-                        //title: snapshot.data.docs[index]['title'],
-                        profilePic: snapshot.data!['applicantsList']
-                            ['PhotoUrl'],
-                        date: snapshot.data!['applicantsList'][index]
-                                ['timeapplied']
-                            .toDate(),
-                      );
-                    }),
-              );
-            } else {
-              return Padding(
-                padding: const EdgeInsets.all(layout.padding * 6),
-                child: Center(
-                  child: Image.asset('assets/images/empty.png'),
-                ),
-              );
-            }
-          } else {
-            return Center(
-              child: Text(
-                'FATAL ERROR',
-                style: txt.error,
-              ),
-            );
-          }
-        },
-      ),
-    );
-*/
-/*
-Column(
-      children: [
-        Job(
-          position: 'Hospital Rceptionist',
-          companyName: 'AAU',
-          date: DateTime(2012, 1, 12),
-          type: 'posted',
-        ),
-        Job(
-          position: 'Script Writer',
-          companyName: 'iCog',
-          date: DateTime(2012, 2, 11),
-          type: 'posted',
-        ),
-        Job(
-          position: 'position',
-          companyName: 'companyName',
-          date: DateTime(2011, 10, 12),
-          type: 'posted',
-        ),
-      ],
-    )
-*/

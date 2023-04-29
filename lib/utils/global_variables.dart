@@ -31,5 +31,9 @@ String? id;
 String? uri;
 int? guid;
 
+String? projectName;
+String? projectDescription;
+String? projectImageUrl;
+
 String? avatarURL;
 NetworkImage? avatarImage;

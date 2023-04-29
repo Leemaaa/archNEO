@@ -3,14 +3,14 @@ import 'package:freelance_app/screens/homescreen/sidebar.dart';
 import 'Activity_jobs_posted.dart';
 import 'activity_jobs_taken.dart';
 
-class JobsActivity extends StatefulWidget {
-  const JobsActivity({super.key});
+class Projects extends StatefulWidget {
+  const Projects({super.key});
 
   @override
-  State<JobsActivity> createState() => _JobsActivityState();
+  State<Projects> createState() => _ProjectsState();
 }
 
-class _JobsActivityState extends State<JobsActivity> {
+class _ProjectsState extends State<Projects> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -31,7 +31,7 @@ class _JobsActivityState extends State<JobsActivity> {
             ),
           ),
           bottom: const TabBar(
-            tabs: [Tab(text: 'Events'), Tab(text: 'Conferences')],
+            tabs: [Tab(text: 'Projects'), Tab(text: 'Conferences')],
             labelColor: Colors.black,
             labelStyle: TextStyle(fontSize: 15),
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'jobs-card.dart';
+import 'projects_card.dart';
 import 'package:freelance_app/utils/layout.dart';
 import 'package:freelance_app/utils/txt.dart';
 
@@ -20,7 +20,7 @@ class _postedState extends State<posted> {
   String? addressForposted;
   void getMyData() async {
     final DocumentSnapshot userDoc = await FirebaseFirestore.instance
-        .collection('users')
+        .collection('architects')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
 
@@ -45,11 +45,10 @@ class _postedState extends State<posted> {
     return Container(
       child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: FirebaseFirestore.instance
-            .collection('jobPosted')
-            .where('id', isEqualTo: uid)
-            .orderBy('CreatedAt', descending: true)
+            .collection('projects')
             .snapshots(),
         builder: (context, AsyncSnapshot snapshot) {
+          print(snapshot);
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.connectionState == ConnectionState.active) {
@@ -64,16 +63,13 @@ class _postedState extends State<posted> {
                 child: ListView.builder(
                     itemCount: snapshot.data?.docs.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Job(
-                        jobID: snapshot.data.docs[index]['job_id'],
-                        contactName: snapshot.data.docs[index]['Name'],
-                        contactImage: snapshot.data.docs[index]['PhotoUrl'],
-                        jobTitle: snapshot.data.docs[index]['title'],
-                        uploadedBy: snapshot.data.docs[index]['id'],
-                        date: snapshot.data.docs[index]['CreatedAt'].toDate(),
-                        type: snapshot.data.docs[index]['id'] == uid
-                            ? 'posted'
-                            : 'taken',
+                      return Project(
+                        projectID: snapshot.data.docs[index]['ID'],
+                        authorName: snapshot.data.docs[index]['Author'],
+                        projectImage: snapshot.data.docs[index]['ProjectImageUrl'],
+                        projectTitle: snapshot.data.docs[index]['Name'],
+                        uploadedBy: snapshot.data.docs[index]['Author'],
+                        projectDesc: snapshot.data.docs[index]['Description'],
                       );
                     }),
               );
@@ -98,30 +94,3 @@ class _postedState extends State<posted> {
     );
   }
 }
-
-
-
-/*
-Column(
-      children: [
-        Job(
-          position: 'Hospital Rceptionist',
-          companyName: 'AAU',
-          date: DateTime(2012, 1, 12),
-          type: 'posted',
-        ),
-        Job(
-          position: 'Script Writer',
-          companyName: 'iCog',
-          date: DateTime(2012, 2, 11),
-          type: 'posted',
-        ),
-        Job(
-          position: 'position',
-          companyName: 'companyName',
-          date: DateTime(2011, 10, 12),
-          type: 'posted',
-        ),
-      ],
-    )
-*/

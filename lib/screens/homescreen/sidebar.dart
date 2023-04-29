@@ -84,7 +84,7 @@ class SideBar extends StatelessWidget {
               ListTile(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const JobsActivity()));
+                      builder: (context) => const Projects()));
                 },
                 leading: const Icon(
                   Icons.history,

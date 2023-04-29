@@ -4,24 +4,22 @@ import 'package:intl/intl.dart';
 import 'applicants.dart';
 import 'details.dart';
 
-class Job extends StatelessWidget {
-  final String jobID;
-  final String jobTitle;
+class Project extends StatelessWidget {
+  final String projectID;
+  final String projectTitle;
   final String uploadedBy;
-  final String contactName;
-  final String contactImage;
-  final DateTime date;
-  final String type;
+  final String authorName;
+  final String projectImage;
+  final String projectDesc;
 
-  const Job({
+  const Project({
     Key? key,
-    required this.jobTitle,
-    required this.date,
-    required this.type,
-    required this.jobID,
+    required this.projectTitle,
+    required this.projectID,
     required this.uploadedBy,
-    required this.contactName,
-    required this.contactImage,
+    required this.authorName,
+    required this.projectImage,
+    required this.projectDesc,
   }) : super(key: key);
 
   @override
@@ -30,10 +28,8 @@ class Job extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => (type == 'taken' || false)
-                ? details()
-                : ApplicantsApp(
-                    job_id: jobID,
+            builder: (context) => ApplicantsApp(
+                    projectID: projectID,
                   ),
           ),
         );
@@ -46,7 +42,7 @@ class Job extends StatelessWidget {
             elevation: 2,
             child: ListTile(
               title: Text(
-                jobTitle,
+                projectTitle,
                 style: const TextStyle(fontSize: 20),
               ),
               subtitle: Column(
@@ -57,8 +53,7 @@ class Job extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('company/Name: $contactName'),
-                      Text(DateFormat.yMMMd().add_jm().format(date)),
+                      Text('Author Name: $authorName'),
                     ],
                   ),
                 ],
