@@ -23,8 +23,17 @@ class CallPage extends StatefulWidget {
 
   final String? userID;
 
+  final String? tokenFromServer;
+
+  final int? gID;
+
   /// Creates a call page with given channel name.
-  const CallPage({Key? key, this.channelName, this.role, this.userID}) : super(key: key);
+  const CallPage({Key? key,
+    this.channelName,
+    this.role,
+    this.userID,
+    this.tokenFromServer,
+    this.gID}) : super(key: key);
 
   @override
   _CallPageState createState() => _CallPageState();
@@ -44,42 +53,6 @@ class _CallPageState extends State<CallPage> {
     super.dispose();
   }
 
-  void getUserData() async {
-    final DocumentSnapshot userDoc = await FirebaseFirestore.instance
-        .collection('architects')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
-    setState(() {
-      id = userDoc.get('id');
-      name = userDoc.get('Name');
-    });
-  }
-
-  void generateUid() {
-    Random random = Random();
-    int min = 100000;
-    int max = 999999;
-    guid =  min + random.nextInt(max - min);
-  }
-
-  Future<void> _fetchData() async {
-    uri = 'https://archneo-token-server.herokuapp.com/rtc/'+ widget.channelName! + '/publisher/userAccount/'+ guid.toString() +'/';
-    print(uri);
-    var url = Uri.parse(uri!);
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      setState(() {
-        final data = json.decode(response.body);
-        setState(() {
-          token = data['rtcToken'];
-        });
-      });
-    } else {
-      throw Exception('Failed to fetch data');
-    }
-
-  }
-
   Future<void> _dispose() async {
     // destroy sdk
     await _engine.leaveChannel();
@@ -89,7 +62,6 @@ class _CallPageState extends State<CallPage> {
   @override
   void initState() {
     super.initState();
-    generateUid();
     // initialize agora sdk
     initialize();
   }
@@ -105,16 +77,12 @@ class _CallPageState extends State<CallPage> {
       return;
     }
 
-    await _fetchData();
-
-    print("token: $token");
-
     await _initAgoraRtcEngine();
     _addAgoraEventHandlers();
     VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
     configuration.dimensions = VideoDimensions(width: 1920, height: 1080);
     await _engine.setVideoEncoderConfiguration(configuration);
-    await _engine.joinChannel(token, widget.channelName!, null, guid!);
+    await _engine.joinChannel(widget.tokenFromServer!, widget.channelName!, null, widget.gID!);
   }
 
   /// Create agora sdk instance and initialize

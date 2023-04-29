@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:math';
+import 'package:http/http.dart' as http;
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -255,6 +258,7 @@ class VideoCallState extends State<VideoCallPage> {
           : _validateError = false;
     });
     if (_channelController.text.isNotEmpty) {
+      await _fetchData();
       // await for camera and mic permissions before pushing video page
       await _handleCameraAndMic(Permission.camera);
       await _handleCameraAndMic(Permission.microphone);
@@ -266,6 +270,8 @@ class VideoCallState extends State<VideoCallPage> {
             channelName: _channelController.text,
             role: _role,
             userID: id,
+            tokenFromServer: token,
+            gID: guid,
           ),
         ),
       );
@@ -275,5 +281,31 @@ class VideoCallState extends State<VideoCallPage> {
   Future<void> _handleCameraAndMic(Permission permission) async {
     final status = await permission.request();
     print(status);
+  }
+
+  void _generateUid() {
+    Random random = Random();
+    int min = 100000;
+    int max = 999999;
+    guid =  min + random.nextInt(max - min);
+  }
+
+  Future<void> _fetchData() async {
+    _generateUid();
+    uri = 'https://archneo-token-server.herokuapp.com/rtc/'+ _channelController.text + '/publisher/userAccount/'+ guid.toString() +'/';
+    var url = Uri.parse(uri!);
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      setState(() {
+        final data = json.decode(response.body);
+        setState(() {
+          token = data['rtcToken'];
+        });
+      });
+    } else {
+      throw Exception('Failed to fetch data');
+    }
+
+    print("uri: $uri token: $token");
   }
 }
