@@ -68,7 +68,7 @@ class DefaultFirebaseOptions {
     projectId: 'freelance-app-f192c',
     storageBucket: 'freelance-app-f192c.appspot.com',
     iosClientId: '79287456473-taun6ns6oktgrinh00ot065gs50lvval.apps.googleusercontent.com',
-    iosBundleId: 'com.example.freelanceApp',
+    iosBundleId: 'com.archneo.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(

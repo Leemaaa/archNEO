@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>182814081093-lg1rlno2oof99g3ioh9mo26vs3dqnjdk.apps.googleusercontent.com</string>
+	<string>182814081093-q8rp1s0fbgfg9vclpitb58il4gbbfi1e.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.182814081093-lg1rlno2oof99g3ioh9mo26vs3dqnjdk</string>
+	<string>com.googleusercontent.apps.182814081093-q8rp1s0fbgfg9vclpitb58il4gbbfi1e</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBR_RdubeqFiSWdR0_B2AMYKjifUZ1vywg</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.freelanceApp</string>
+	<string>com.archneo.app</string>
 	<key>PROJECT_ID</key>
 	<string>getjob-ef46d</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:182814081093:ios:96b5fd7bf7cb990ff4e32c</string>
+	<string>1:182814081093:ios:3ab1438faae02a8df4e32c</string>
 </dict>
 </plist>
