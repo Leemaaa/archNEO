@@ -3,13 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:freelance_app/config/user_state.dart';
-import 'package:freelance_app/utils/global_variables.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   final String userID;
+  final String? uEmail;
 
-  const ProfilePage({required this.userID});
+  const ProfilePage({
+    required this.userID,
+    required this.uEmail,
+  });
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -25,33 +28,39 @@ class _ProfilePageState extends State<ProfilePage> {
   String imageUrl = "";
   String joinedAt = " ";
   bool _isSameUser = false;
+  String collectionName = "";
+  String profileID = "";
 
   void getUserData() async {
     try {
       _isLoading = true;
-      final DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('architects')
-          .doc(widget.userID)
+      final QuerySnapshot rolesDoc = await FirebaseFirestore.instance
+          .collection('roles')
           .get();
-      if (userDoc == null) {
-        return;
-      } else {
-        setState(() {
-          email = userDoc.get('Email');
-          name = userDoc.get('Name');
-          phoneNumber = userDoc.get('Phone');
-          imageUrl = userDoc.get('PhotoUrl');
-          Timestamp joinedAtTimeStamp = userDoc.get('CreatedAt');
-          var joinedDate = joinedAtTimeStamp.toDate();
-          joinedAt = '${joinedDate.year}-${joinedDate.month}-${joinedDate.day}';
-        });
-        User? user = _auth.currentUser;
-        final _uid = user!.uid;
-        setState(() {
-          _isSameUser = _uid == widget.userID;
-        });
+      for (var i = 0; i < rolesDoc.docs.length; i++) {
+        if (rolesDoc.docs[i].get('Email') == widget.uEmail) {
+          collectionName = rolesDoc.docs[i].get('Role')+ 's';
+          profileID = rolesDoc.docs[i].get('ID');
+        }
       }
-    } catch (eror) {
+      final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection(collectionName)
+          .doc(profileID)
+          .get();
+      setState(() {
+        email = userDoc.get('Email');
+        name = userDoc.get('Name');
+        phoneNumber = userDoc.get('Phone');
+        imageUrl = userDoc.get('PhotoUrl');
+        Timestamp joinedAtTimeStamp = userDoc.get('CreatedAt');
+        var joinedDate = joinedAtTimeStamp.toDate();
+        joinedAt = '${joinedDate.year}-${joinedDate.month}-${joinedDate.day}';
+      });
+      User? user = _auth.currentUser;
+      final _uid = user!.uid;
+      setState(() {
+        _isSameUser = _uid == widget.userID;
+      });
     } finally {
       _isLoading = false;
     }
@@ -123,7 +132,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               const Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  'Architect Information :',
+                                  'Information :',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 22.0),
                                 ),
