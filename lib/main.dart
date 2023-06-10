@@ -11,13 +11,11 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _initialization,
       builder: ((context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return MaterialApp(

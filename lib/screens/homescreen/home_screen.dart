@@ -58,6 +58,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   @override
   Widget build(BuildContext context) {
     final _uid = user!.uid;
+    final _email = user!.email;
     print(_uid);
     return Scaffold(
       body: <Widget>[
@@ -69,6 +70,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         const Projects(),
         ProfilePage(
           userID: _uid,
+          uEmail: _email,
         ),
       ][currentIndex],
       floatingActionButton: currentIndex == 0 || currentIndex == 1
