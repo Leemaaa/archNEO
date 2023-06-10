@@ -218,7 +218,7 @@ class VideoCallState extends State<VideoCallPage> {
       try {
         FirebaseFirestore.instance.collection('conferences').doc(confID).set(
           {
-            'id': confID,
+            'ID': confID,
             'Name': _channelController.text,
             'AuthorName' : name,
             'AuthorID' : id,
