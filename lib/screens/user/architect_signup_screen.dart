@@ -569,7 +569,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         );
         FirebaseFirestore.instance.collection('roles').doc(uID).set(
           {
-            'id': uID,
+            'ID': uID,
             'Role': 'architect',
             'Email': _emailController.text,
             'CreatedAt': Timestamp.now(),
