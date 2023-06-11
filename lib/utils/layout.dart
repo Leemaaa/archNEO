@@ -1,6 +1,6 @@
 class layout {
   static const padding = 16.0;
-  static const radius = 16.0;
+  static const radius = 30.0;
   static const elevation = 5.0;
 
   static const curvedNavBarHeight = 50.0;

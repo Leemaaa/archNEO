@@ -8,14 +8,14 @@ import 'package:freelance_app/utils/txt.dart';
 import 'package:freelance_app/utils/clr.dart';
 import 'package:freelance_app/widgets/event_tile.dart';
 
-class Events extends StatefulWidget {
-  const Events({super.key});
+class ConferencePage extends StatefulWidget {
+  const ConferencePage({super.key, required String userID});
 
   @override
-  State<Events> createState() => _EventsState();
+  State<ConferencePage> createState() => _ConferencePageState();
 }
 
-class _EventsState extends State<Events> {
+class _ConferencePageState extends State<ConferencePage> {
   String? eventsCategoryFilter;
 
   void getMyData() async {

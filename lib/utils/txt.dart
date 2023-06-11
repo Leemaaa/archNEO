@@ -92,8 +92,6 @@ class txt {
     color: clr.light,
   );
 
-
-
   static const floatingLabelLight = TextStyle(
     fontFamily: _fontBody,
     fontWeight: FontWeight.normal,
@@ -144,7 +142,7 @@ class txt {
     fontFamily: _fontBody,
     fontWeight: FontWeight.normal,
     fontSize: textSizeDefault,
-    color: clr.bottomNavBarIcon,
+    color: Color.fromARGB(255, 26, 26, 98),
   );
 
   static const floatingLabelDark = TextStyle(

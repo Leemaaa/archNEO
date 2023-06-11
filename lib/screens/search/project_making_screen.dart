@@ -9,29 +9,39 @@ import 'package:freelance_app/utils/layout.dart';
 import 'package:freelance_app/utils/txt.dart';
 import 'package:uuid/uuid.dart';
 
-class Upload extends StatefulWidget {
+class Search extends StatefulWidget {
   final String userID;
 
-  const Upload({super.key, required this.userID});
+  const Search({super.key, required this.userID});
   @override
-  State<Upload> createState() => _UploadState();
+  State<Search> createState() => _SearchState();
 }
+// _uploadProject1FormKey
+//_eventSubject1Controller
+//_eventSubject1FocusNode
+//_eventTitle1Controller
+//_eventTitle1FocusNode
+//_eventDesc1Controller
+// _eventDesc1FocusNode
+//_eventDeadline1Controller
+//_eventDeadline1FocusNode
 
-class _UploadState extends State<Upload> {
-  final _uploadEventFormKey = GlobalKey<FormState>();
+class _SearchState extends State<Search> {
+  final _uploadProjectFormKey = GlobalKey<FormState>();
 
-  final TextEditingController _eventSubjectController = TextEditingController();
-  final FocusNode _eventSubjectFocusNode = FocusNode();
-
-  final TextEditingController _eventTitleController = TextEditingController();
-  final FocusNode _eventTitleFocusNode = FocusNode();
-
-  final TextEditingController _eventDescController = TextEditingController();
-  final FocusNode _eventDescFocusNode = FocusNode();
-
-  final TextEditingController _eventDeadlineController =
+  final TextEditingController _projectSubjectController =
       TextEditingController();
-  final FocusNode _eventDeadlineFocusNode = FocusNode();
+  final FocusNode _projectSubjectFocusNode = FocusNode();
+
+  final TextEditingController _projectTitleController = TextEditingController();
+  final FocusNode _projectTitleFocusNode = FocusNode();
+
+  final TextEditingController _projectDescController = TextEditingController();
+  final FocusNode _projectDescFocusNode = FocusNode();
+
+  final TextEditingController _projectDeadlineController =
+      TextEditingController();
+  final FocusNode _projectDeadlineFocusNode = FocusNode();
   DateTime? selectedDeadline;
   Timestamp? deadlineDateTimeStamp;
 
@@ -39,14 +49,14 @@ class _UploadState extends State<Upload> {
 
   @override
   void dispose() {
-    _eventSubjectController.dispose();
-    _eventSubjectFocusNode.dispose();
-    _eventTitleController.dispose();
-    _eventTitleFocusNode.dispose();
-    _eventDescController.dispose();
-    _eventDescFocusNode.dispose();
-    _eventDeadlineController.dispose();
-    _eventDeadlineFocusNode.dispose();
+    _projectSubjectController.dispose();
+    _projectSubjectFocusNode.dispose();
+    _projectTitleController.dispose();
+    _projectTitleFocusNode.dispose();
+    _projectDescController.dispose();
+    _projectDescFocusNode.dispose();
+    _projectDeadlineController.dispose();
+    _projectDeadlineFocusNode.dispose();
     super.dispose();
   }
 
@@ -87,8 +97,14 @@ class _UploadState extends State<Upload> {
             ),
             child: SingleChildScrollView(
               child: Card(
-                elevation: layout.elevation,
-                color: clr.card,
+                // elevation: layout.elevation,
+                color: Color.fromARGB(255, 242, 242, 242),
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: Color.fromARGB(255, 248, 243, 243),
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(layout.padding),
                   child: Column(
@@ -100,24 +116,28 @@ class _UploadState extends State<Upload> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              'Event Description',
+                              'Project Description',
                               style: txt.titleDark,
                             ),
                           ),
                         ),
                         Form(
-                          key: _uploadEventFormKey,
+                          key: _uploadProjectFormKey,
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _eventSubjectFormField(),
-                                _eventTitleFormField(),
-                                _eventDescFormField(),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: layout.padding),
-                                  child: _eventDeadlineFormField(),
-                                ),
+                                // _eventSubject1FormField
+                                //_eventTitleForm1Field
+                                //_eventDescForm1Field
+                                //_eventDeadline1FormField
+                                _projectSubjectFormField(),
+                                _projectTitleFormField(),
+                                _projectDescFormField(),
+                                // Padding(
+                                //   padding: const EdgeInsets.only(
+                                //       bottom: layout.padding),
+                                //   child: _projectDeadlineFormField(),
+                                // ),
                               ]),
                         ),
                         _isLoading
@@ -132,7 +152,7 @@ class _UploadState extends State<Upload> {
                                   left: layout.padding,
                                   right: layout.padding,
                                 ),
-                                child: _uploadEventButton(),
+                                child: _uploadProjectButt(),
                               ),
                       ]),
                 ),
@@ -144,24 +164,25 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  Widget _eventSubjectFormField() {
+  Widget _projectSubjectFormField() {
     return GestureDetector(
       onTap: () {
-        _showEventsSubjectsDialog();
+        //_showEventsSubjects1Dialog
+        _showProjectsSubjectsDialog();
       },
       child: TextFormField(
         enabled: false,
-        focusNode: _eventSubjectFocusNode,
+        focusNode: _projectSubjectFocusNode,
         autofocus: false,
-        controller: _eventSubjectController,
+        controller: _projectSubjectController,
         style: txt.fieldDark,
         maxLines: 1,
         maxLength: 100,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.next,
-        onEditingComplete: () => _eventTitleFocusNode.requestFocus(),
+        onEditingComplete: () => _projectTitleFocusNode.requestFocus(),
         decoration: InputDecoration(
-          labelText: 'Select event subject',
+          labelText: 'Specification',
           labelStyle: txt.labelDark,
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           floatingLabelStyle: txt.floatingLabelDark,
@@ -191,18 +212,18 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  Widget _eventTitleFormField() {
+  Widget _projectTitleFormField() {
     return TextFormField(
       enabled: true,
-      focusNode: _eventTitleFocusNode,
+      focusNode: _projectTitleFocusNode,
       autofocus: false,
-      controller: _eventTitleController,
+      controller: _projectTitleController,
       style: txt.fieldDark,
       maxLines: 1,
       maxLength: 100,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
-      onEditingComplete: () => _eventDescFocusNode.requestFocus(),
+      onEditingComplete: () => _projectDescFocusNode.requestFocus(),
       decoration: InputDecoration(
         labelText: 'Title',
         labelStyle: txt.labelDark,
@@ -235,18 +256,18 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  Widget _eventDescFormField() {
+  Widget _projectDescFormField() {
     return TextFormField(
       enabled: true,
-      focusNode: _eventDescFocusNode,
+      focusNode: _projectDescFocusNode,
       autofocus: false,
-      controller: _eventDescController,
+      controller: _projectDescController,
       style: txt.fieldDark,
       maxLines: 3,
       maxLength: 300,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
-      onEditingComplete: () => _eventDescFocusNode.unfocus(),
+      onEditingComplete: () => _projectDescFocusNode.unfocus(),
       decoration: InputDecoration(
         labelText: 'Description',
         labelStyle: txt.labelDark,
@@ -279,62 +300,62 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  Widget _eventDeadlineFormField() {
-    return GestureDetector(
-      onTap: () {
-        _selectDeadlineDialog();
-      },
-      child: TextFormField(
-        enabled: false,
-        focusNode: _eventDeadlineFocusNode,
-        autofocus: false,
-        controller: _eventDeadlineController,
-        style: txt.fieldDark,
-        maxLines: 1,
-        maxLength: 100,
-        keyboardType: TextInputType.text,
-        textInputAction: TextInputAction.done,
-        onEditingComplete: () => _eventDeadlineFocusNode.unfocus(),
-        decoration: InputDecoration(
-          labelText: 'Select deadline date',
-          labelStyle: txt.labelDark,
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
-          floatingLabelStyle: txt.floatingLabelDark,
-          // filled: true,
-          // fillColor: clr.passive,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: clr.dark,
-            ),
-          ),
-          focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: clr.dark,
-            ),
-          ),
-          errorBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: clr.error,
-            ),
-          ),
-        ),
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Value is missing';
-          }
-          return null;
-        },
-      ),
-    );
-  }
+  // Widget _projectDeadlineFormField() {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       _selectDeadlineDialog();
+  //     },
+  //     child: TextFormField(
+  //       enabled: false,
+  //       focusNode: _projectDeadlineFocusNode,
+  //       autofocus: false,
+  //       controller: _projectDeadlineController,
+  //       style: txt.fieldDark,
+  //       maxLines: 1,
+  //       maxLength: 100,
+  //       keyboardType: TextInputType.text,
+  //       textInputAction: TextInputAction.done,
+  //       onEditingComplete: () => _projectDeadlineFocusNode.unfocus(),
+  //       decoration: InputDecoration(
+  //         labelText: 'Select deadline date',
+  //         labelStyle: txt.labelDark,
+  //         floatingLabelBehavior: FloatingLabelBehavior.auto,
+  //         floatingLabelStyle: txt.floatingLabelDark,
+  //         // filled: true,
+  //         // fillColor: clr.passive,
+  //         enabledBorder: const UnderlineInputBorder(
+  //           borderSide: BorderSide(
+  //             color: clr.dark,
+  //           ),
+  //         ),
+  //         focusedBorder: const UnderlineInputBorder(
+  //           borderSide: BorderSide(
+  //             color: clr.dark,
+  //           ),
+  //         ),
+  //         errorBorder: UnderlineInputBorder(
+  //           borderSide: BorderSide(
+  //             color: clr.error,
+  //           ),
+  //         ),
+  //       ),
+  //       validator: (value) {
+  //         if (value!.isEmpty) {
+  //           return 'Value is missing';
+  //         }
+  //         return null;
+  //       },
+  //     ),
+  //   );
+  // }
 
-  Widget _uploadEventButton() {
+  Widget _uploadProjectButt() {
     return MaterialButton(
       onPressed: () {
-        _uploadEvent();
+        _uploadProject();
       },
       elevation: layout.elevation,
-      color: clr.primary,
+      color: Color.fromARGB(255, 14, 14, 54),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(layout.radius),
       ),
@@ -345,7 +366,7 @@ class _UploadState extends State<Upload> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: const [
               Text(
-                'Upload Event   ',
+                'Upload   ',
                 style: txt.button,
               ),
               Icon(
@@ -358,7 +379,7 @@ class _UploadState extends State<Upload> {
     );
   }
 
-  _showEventsSubjectsDialog() {
+  _showProjectsSubjectsDialog() {
     Size size = MediaQuery.of(context).size;
     showDialog(
       context: context,
@@ -371,7 +392,7 @@ class _UploadState extends State<Upload> {
                 bottom: layout.padding,
               ),
               child: Text(
-                'Event Subjects',
+                'Project Subjects',
                 textAlign: TextAlign.center,
                 style: txt.titleLight.copyWith(color: clr.passiveLight),
               ),
@@ -380,18 +401,18 @@ class _UploadState extends State<Upload> {
               width: size.width * 0.9,
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: eventSubjects.length,
+                itemCount: projectSubjects.length,
                 itemBuilder: ((context, index) {
                   return InkWell(
                     onTap: () {
                       setState(() {
-                        _eventSubjectController.text = eventSubjects[index];
+                        _projectSubjectController.text = projectSubjects[index];
                         Navigator.pop(context);
                       });
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
-                        bottom: index != eventSubjects.length - 1
+                        bottom: index != projectSubjects.length - 1
                             ? layout.padding
                             : 0,
                       ),
@@ -407,7 +428,7 @@ class _UploadState extends State<Upload> {
                               left: layout.padding * 1.25,
                             ),
                             child: Text(
-                              eventSubjects[index],
+                              projectSubjects[index],
                               style: txt.body2Light
                                   .copyWith(color: clr.passiveLight),
                             ),
@@ -423,7 +444,7 @@ class _UploadState extends State<Upload> {
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                 InkWell(
                   onTap: () {
-                    _eventSubjectController.text = '';
+                    _projectSubjectController.text = '';
                     Navigator.canPop(context) ? Navigator.pop(context) : null;
                   },
                   child: Padding(
@@ -460,21 +481,21 @@ class _UploadState extends State<Upload> {
     if (selectedDeadline != null) {
       setState(
         () {
-          _eventDeadlineController.text =
+          _projectDeadlineController.text =
               '${selectedDeadline!.year} - ${selectedDeadline!.month} - ${selectedDeadline!.day}';
           deadlineDateTimeStamp = Timestamp.fromMicrosecondsSinceEpoch(
               selectedDeadline!.microsecondsSinceEpoch);
         },
       );
     } else {
-      _eventDeadlineController.text = '';
+      _projectDeadlineController.text = '';
       deadlineDateTimeStamp = null;
     }
   }
 
-  void _uploadEvent() async {
+  void _uploadProject() async {
     getUserData();
-    final eventID = const Uuid().v4();
+    final projectID = const Uuid().v4();
     User? user = FirebaseAuth.instance.currentUser;
     final uid = user!.uid;
     final DocumentSnapshot userDoc = await FirebaseFirestore.instance
@@ -484,10 +505,9 @@ class _UploadState extends State<Upload> {
     //final isValid = _uploadJobFormKey.currentState!.validate();
 
     // if (isValid) {
-    if (_eventSubjectController.text == '' ||
-        _eventTitleController.text == '' ||
-        _eventDescController.text == '' ||
-        _eventDeadlineController.text == '' ) {
+    if (_projectSubjectController.text == '' ||
+        _projectTitleController.text == '' ||
+        _projectDescController.text == '') {
       GlobalMethod.showErrorDialog(
         context: context,
         icon: Icons.error,
@@ -507,35 +527,34 @@ class _UploadState extends State<Upload> {
       user_image = userDoc.get('PhotoUrl');
     });
     try {
-      await FirebaseFirestore.instance.collection('events').doc(eventID).set({
-        'EventID': eventID,
-        'CreatedAt': Timestamp.now(),
-        'ID': uid,
-        'PhotoUrl': user_image,
-        'Name': name,
-        'Email': user.email,
-        'Venue': venue,
-        'Subjects': _eventSubjectController.text,
-        'Title': _eventTitleController.text,
-        'Description': _eventDescController.text,
-        'DeadlineDate': _eventDeadlineController.text,
-        'DeadlineTimestamp': deadlineDateTimeStamp,
-        'Recruiting': true,
-        'Applicants': 0,
-        'Comments': [],
-        'ApplicantsList': [],
+      await FirebaseFirestore.instance
+          .collection('projects')
+          .doc(projectID)
+          .set({
+        // 'CreatedAt': Timestamp.now(),
+        'Author': name,
+        'AuthorImageUrl':
+            "https://firebasestorage.googleapis.com/v0/b/getjob-ef46d.appspot.com/o/projects%2FER8kalEXYAA75rE.jpg-large.jpeg?alt=media&token=a88686cb-d425-476a-adaf-c6d7b89c03c5",
+        // 'AuthorID': uid,
+        'Description': _projectDescController.text,
+        'ID': projectID,
+        'ProjectImageUrl':
+            "https://firebasestorage.googleapis.com/v0/b/getjob-ef46d.appspot.com/o/projects%2FER8kalEXYAA75rE.jpg-large.jpeg?alt=media&token=a88686cb-d425-476a-adaf-c6d7b89c03c5",
+
+        'Name': _projectTitleController.text,
+        // 'Title': _projectTitleController.text,
       });
       await Fluttertoast.showToast(
-        msg: 'The event has been successfully uploaded.',
+        msg: 'The project has been successfully uploaded.',
         toastLength: Toast.LENGTH_LONG,
         backgroundColor: Colors.black54,
         fontSize: txt.textSizeDefault,
       );
       setState(() {
-        _eventSubjectController.clear();
-        _eventTitleController.clear();
-        _eventDescController.clear();
-        _eventDeadlineController.clear();
+        _projectSubjectController.clear();
+        _projectTitleController.clear();
+        _projectDescController.clear();
+        _projectDeadlineController.clear();
       });
     } catch (error) {
       setState(() {
@@ -563,8 +582,10 @@ class _UploadState extends State<Upload> {
     setState(() {
       id = userDoc.get('id');
       name = userDoc.get('Name');
-      user_image = userDoc.get('PhotoUrl');
-      venue = userDoc.get('address');
+      // projectImageUrl = userDoc.get('ProjectImageUrl');
+
+      // user_image = userDoc.get('PhotoUrl');
+      // venue = userDoc.get('address');
     });
   }
 }

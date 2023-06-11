@@ -28,10 +28,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 height: 50,
                 width: 50,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
+                  border: Border.all(color: Color(0xffD2A244), width: 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: IconButton(
+                    color: Color(0xffD2A244),
                     icon: const Icon(Icons.arrow_back_ios_sharp),
                     onPressed: () {
                       Navigator.pop(context);
@@ -42,7 +43,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               padding: EdgeInsets.all(10.0),
               child: Text("Forgot Password?",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Color.fromARGB(255, 14, 14, 54),
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                   )),
@@ -63,7 +64,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ),
             CustomButton(
               buttonText: "Send Code",
-              buttonColor: Colors.black,
+              buttonColor: Color.fromARGB(255, 14, 14, 54),
               textColor: Colors.white,
               onPressed: () {
                 Navigator.pop(context);

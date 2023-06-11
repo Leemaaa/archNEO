@@ -5,17 +5,20 @@ import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(name: "archNEO", options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+      name: "archNEO", options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   // This widget is the root of the application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext flcontext) {
     return FutureBuilder(
+      future: _initialization,
       builder: ((context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return MaterialApp(

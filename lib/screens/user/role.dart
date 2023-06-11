@@ -17,13 +17,13 @@ class ChooseRoleScreen extends StatelessWidget {
           //height: MediaQuery.of(context).size.height,
           //width: double.infinity,
           decoration: const BoxDecoration(
-            /*
+              /*
             image: DecorationImage(
               image: AssetImage("assets/images/logo.png"),
             ),
 
             */
-          ),
+              ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -31,7 +31,7 @@ class ChooseRoleScreen extends StatelessWidget {
                 height: 300,
                 //width: 180,
                 child: Image(
-                    image: AssetImage("assets/images/logo.png"),
+                    image: AssetImage("assets/images/logo_archneo.png"),
                     fit: BoxFit.fill),
               ),
               const SizedBox(height: 20),
@@ -51,7 +51,7 @@ class ChooseRoleScreen extends StatelessWidget {
               CustomButton(
                 buttonText: "Architect",
                 buttonColor: Colors.white,
-                textColor: Colors.black,
+                textColor: Color.fromARGB(255, 14, 14, 54),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -83,8 +83,7 @@ class ChooseRoleScreen extends StatelessWidget {
                     const TextSpan(text: '   '),
                     TextSpan(
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () =>
-                            Navigator.push(
+                        ..onTap = () => Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const LoginScreen()),
@@ -100,4 +99,3 @@ class ChooseRoleScreen extends StatelessWidget {
     );
   }
 }
-

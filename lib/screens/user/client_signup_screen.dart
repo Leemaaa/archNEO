@@ -134,9 +134,9 @@ class _ClientSignUpScreenState extends State<ClientSignUpScreen>
                     _isLoading
                         ? _progressIndicator()
                         : Padding(
-                      padding: const EdgeInsets.all(layout.padding),
-                      child: _signUpButton(),
-                    ),
+                            padding: const EdgeInsets.all(layout.padding),
+                            child: _signUpButton(),
+                          ),
                     _haveAccount(),
                   ]),
                 ),
@@ -180,30 +180,30 @@ class _ClientSignUpScreenState extends State<ClientSignUpScreen>
                 borderRadius: BorderRadius.circular(layout.radius),
                 child: imageFile == null
                     ? Stack(
-                  children: [
-                    Positioned(
-                      bottom: cameraIconSpacing,
-                      right: cameraIconSpacing,
-                      child: Icon(
-                        Icons.camera_enhance_sharp,
-                        color: clr.light.withOpacity(0.8),
-                        size: cameraIconSize,
-                      ),
-                    ),
-                  ],
-                )
+                        children: [
+                          Positioned(
+                            bottom: cameraIconSpacing,
+                            right: cameraIconSpacing,
+                            child: Icon(
+                              Icons.camera_enhance_sharp,
+                              color: clr.light.withOpacity(0.8),
+                              size: cameraIconSize,
+                            ),
+                          ),
+                        ],
+                      )
                     : Stack(children: [
-                  Image.file(imageFile!, fit: BoxFit.fill),
-                  Positioned(
-                    bottom: cameraIconSpacing,
-                    right: cameraIconSpacing,
-                    child: Icon(
-                      Icons.camera_enhance_sharp,
-                      color: clr.light.withOpacity(0.6),
-                      size: cameraIconSize,
-                    ),
-                  )
-                ]),
+                        Image.file(imageFile!, fit: BoxFit.fill),
+                        Positioned(
+                          bottom: cameraIconSpacing,
+                          right: cameraIconSpacing,
+                          child: Icon(
+                            Icons.camera_enhance_sharp,
+                            color: clr.light.withOpacity(0.6),
+                            size: cameraIconSize,
+                          ),
+                        )
+                      ]),
               ),
             ),
           ),
@@ -394,7 +394,7 @@ class _ClientSignUpScreenState extends State<ClientSignUpScreen>
     return MaterialButton(
       onPressed: _submitSignUpForm,
       // elevation: layout.elevation,
-      color: clr.primary,
+      color: Color.fromARGB(255, 14, 14, 54),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(layout.radius * 2),
       ),
@@ -433,7 +433,7 @@ class _ClientSignUpScreenState extends State<ClientSignUpScreen>
         return;
       }
       setState(
-            () {
+        () {
           _isLoading = true;
         },
       );
@@ -463,7 +463,7 @@ class _ClientSignUpScreenState extends State<ClientSignUpScreen>
         );
         FirebaseFirestore.instance.collection('roles').doc(uID).set(
           {
-            'ID': uID,
+            'id': uID,
             'Role': 'client',
             'Email': _emailController.text,
             'CreatedAt': Timestamp.now(),
@@ -472,7 +472,7 @@ class _ClientSignUpScreenState extends State<ClientSignUpScreen>
         Navigator.canPop(context) ? Navigator.pop(context) : null;
       } catch (error) {
         setState(
-              () {
+          () {
             _isLoading = false;
           },
         );
@@ -487,7 +487,7 @@ class _ClientSignUpScreenState extends State<ClientSignUpScreen>
       }
     }
     setState(
-          () {
+      () {
         _isLoading = false;
       },
     );
@@ -504,8 +504,7 @@ class _ClientSignUpScreenState extends State<ClientSignUpScreen>
           const TextSpan(text: '   '),
           TextSpan(
             recognizer: TapGestureRecognizer()
-              ..onTap = () =>
-                  Navigator.push(
+              ..onTap = () => Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const LoginScreen()),
@@ -573,14 +572,14 @@ class _ClientSignUpScreenState extends State<ClientSignUpScreen>
 
   void _getFromCamera() async {
     XFile? pickedFile =
-    await ImagePicker().pickImage(source: ImageSource.camera);
+        await ImagePicker().pickImage(source: ImageSource.camera);
     _cropImage(pickedFile!.path);
     Navigator.pop(context);
   }
 
   void _getFromGallery() async {
     XFile? pickedFile =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     _cropImage(pickedFile!.path);
     Navigator.pop(context);
   }
@@ -593,7 +592,7 @@ class _ClientSignUpScreenState extends State<ClientSignUpScreen>
     );
     if (croppedImage != null) {
       setState(
-            () {
+        () {
           imageFile = File(croppedImage.path);
         },
       );

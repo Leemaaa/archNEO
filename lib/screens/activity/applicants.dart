@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freelance_app/screens/activity/applicant-card.dart';
 import '../../utils/global_variables.dart';
-import 'projects_card.dart';
+import '../search/projects_card.dart';
 import 'package:freelance_app/utils/layout.dart';
 import 'package:freelance_app/utils/txt.dart';
 import 'package:freelance_app/utils/clr.dart';
@@ -23,15 +23,14 @@ class _ApplicantsAppState extends State<ApplicantsApp> {
   String? userImageForPosted;
   String? addressForposted;
   void getMyData() async {
-    final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+    final userDoc = await FirebaseFirestore.instance
         .collection('architects')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .where('Email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
         .get();
 
     setState(() {
-      nameForposted = userDoc.get('Name');
-      userImageForPosted = userDoc.get('PhotoUrl');
-      addressForposted = userDoc.get('address');
+      nameForposted = userDoc.docs[0]['Name'];
+      userImageForPosted = userDoc.docs[0]['PhotoUrl'];
     });
   }
 
@@ -57,7 +56,7 @@ class _ApplicantsAppState extends State<ApplicantsApp> {
   @override
   Widget build(BuildContext context) {
     User? user = _auth.currentUser;
-    final uid = user!.uid;
+    // final uid = user!.uid;
 
     return Scaffold(
       appBar: AppBar(
@@ -76,40 +75,37 @@ class _ApplicantsAppState extends State<ApplicantsApp> {
       ),
       body: Container(
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                // height: 30,
-                //width: 180,
-                child: Text(
-                  projectName!,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(
+              // height: 30,
+              //width: 180,
+              child: Text(
+                projectName!,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 300,
+              //width: 180,
+              child: Image(
+                  image: NetworkImage(projectImageUrl!), fit: BoxFit.fill),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 300,
+              //width: 180,
+              child: Text(
+                projectDescription!,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
                 ),
               ),
-              const SizedBox(height: 20),
-               SizedBox(
-                height: 300,
-                //width: 180,
-                child: Image(
-                    image: NetworkImage(projectImageUrl!),
-                    fit: BoxFit.fill),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                height: 300,
-                //width: 180,
-                child: Text(
-                  projectDescription!,
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                  ),
-                ),
-              ),
+            ),
           ]),
         ),
       ),

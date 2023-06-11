@@ -13,6 +13,7 @@ import '../../utils/global_variables.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '/../screens/homescreen/components/event_details.dart';
 
 class CallPage extends StatefulWidget {
   /// non-modifiable channel name of the page
@@ -28,12 +29,14 @@ class CallPage extends StatefulWidget {
   final int? gID;
 
   /// Creates a call page with given channel name.
-  const CallPage({Key? key,
-    this.channelName,
-    this.role,
-    this.userID,
-    this.tokenFromServer,
-    this.gID}) : super(key: key);
+  const CallPage(
+      {Key? key,
+      this.channelName,
+      this.role,
+      this.userID,
+      this.tokenFromServer,
+      this.gID})
+      : super(key: key);
 
   @override
   _CallPageState createState() => _CallPageState();
@@ -44,7 +47,7 @@ class _CallPageState extends State<CallPage> {
   final _infoStrings = <String>[];
   bool muted = false;
   late RtcEngine _engine;
-
+  var channelName1 = '';
   @override
   void dispose() {
     // clear users
@@ -64,6 +67,7 @@ class _CallPageState extends State<CallPage> {
     super.initState();
     // initialize agora sdk
     initialize();
+    channelName1 = widget.channelName.toString();
   }
 
   Future<void> initialize() async {
@@ -82,7 +86,8 @@ class _CallPageState extends State<CallPage> {
     VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
     configuration.dimensions = VideoDimensions(width: 1920, height: 1080);
     await _engine.setVideoEncoderConfiguration(configuration);
-    await _engine.joinChannel(widget.tokenFromServer!, widget.channelName!, null, widget.gID!);
+    await _engine.joinChannel(
+        widget.tokenFromServer!, widget.channelName!, null, widget.gID!);
   }
 
   /// Create agora sdk instance and initialize
@@ -314,9 +319,17 @@ class _CallPageState extends State<CallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Conference'),
+        centerTitle: true,
+        leading: const BackButton(
+          color: const Color(0xffD2A244),
+        ),
+        title: Text(
+          channelName1,
+          style: TextStyle(color: Color.fromARGB(255, 14, 14, 54)),
+        ),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
-      backgroundColor: Colors.black,
+      // backgroundColor: const Color(0xffD2A244),
       body: Center(
         child: Stack(
           children: <Widget>[

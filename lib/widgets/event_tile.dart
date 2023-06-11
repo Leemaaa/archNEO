@@ -49,7 +49,7 @@ class _EventState extends State<Event> {
         right: 0,
       ),
       child: Card(
-        elevation: layout.elevation,
+        elevation: 3,
         color: clr.card,
         child: ListTile(
           onTap: () {
@@ -91,25 +91,16 @@ class _EventState extends State<Event> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: layout.padding / 4),
                   child: Text(
-                    widget.contactName,
-                    style: txt.body2Dark,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: layout.padding / 4),
-                  child: Text(
                     widget.eventDesc,
                     style: txt.body1Dark,
-                    maxLines: 4,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ]),
           trailing: const Icon(
             Icons.keyboard_arrow_right,
-            color: clr.dark,
+            color: Color.fromARGB(255, 14, 14, 54),
             size: layout.iconMedium,
           ),
         ),
@@ -133,7 +124,7 @@ class _EventState extends State<Event> {
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                 _textButtonDelete(user, uid),
-                _textButtonCancel(),
+                _textButtonCancel(context),
               ]),
             ]),
           ),
@@ -195,10 +186,10 @@ class _EventState extends State<Event> {
     );
   }
 
-  Widget _textButtonCancel() {
+  Widget _textButtonCancel(con1) {
     return TextButton(
       onPressed: () {
-        Navigator.canPop(context) ? Navigator.pop(context) : null;
+        Navigator.canPop(con1) ? Navigator.pop(con1) : null;
       },
       child: Row(children: const [
         Icon(

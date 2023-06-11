@@ -13,14 +13,7 @@ class WelcomeScreen extends StatelessWidget {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
-        decoration: const BoxDecoration(
-          /*
-          image: DecorationImage(
-            image: AssetImage("assets/images/logo.png"),
-          ),
-
-          */
-            ),
+        decoration: const BoxDecoration(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -28,13 +21,20 @@ class WelcomeScreen extends StatelessWidget {
               height: 300,
               //width: 180,
               child: Image(
-                  image: AssetImage("assets/images/logo.png"),
+                  image: AssetImage("assets/images/logo_archneo.png"),
                   fit: BoxFit.fill),
             ),
+            // const SizedBox(height: 20),
+            Text('ARCHNEO',
+                style: TextStyle(
+                    fontSize: 30.0,
+                    color: Color.fromARGB(255, 14, 14, 54),
+                    fontFamily: 'Impact')),
             const SizedBox(height: 20),
+
             CustomButton(
               buttonText: "Login",
-              buttonColor: Colors.black,
+              buttonColor: Color.fromARGB(255, 14, 14, 54),
               textColor: Colors.white,
               onPressed: () {
                 Navigator.push(
@@ -48,7 +48,7 @@ class WelcomeScreen extends StatelessWidget {
             CustomButton(
               buttonText: "Register",
               buttonColor: Colors.white,
-              textColor: Colors.black,
+              textColor: Color.fromARGB(255, 14, 14, 54),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -59,15 +59,16 @@ class WelcomeScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 10),
-            const Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Text(
-                "We make design easier for everyone!",
-                style: TextStyle(
-                  color: Colors.blueGrey,
-                  fontSize: 18,
+            Column(
+              children: const [
+                Text(
+                  'We make design easier for everyone!',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.blueGrey,
+                  ),
                 ),
-              ),
+              ],
             ),
             const SizedBox(height: 20),
           ],

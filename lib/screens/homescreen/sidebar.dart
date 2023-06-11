@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:freelance_app/screens/activity/activity.dart';
+import 'package:freelance_app/screens/search/projects_card.dart';
+import 'package:freelance_app/screens/search/project_activity.dart';
 import 'package:freelance_app/utils/colors.dart';
-import '../../screens/activity/Activity_jobs_posted.dart';
+import '../search/Projects_posted.dart';
 import '../../config/user_state.dart';
 
 class AboutUS extends StatelessWidget {
@@ -91,7 +93,7 @@ class SideBar extends StatelessWidget {
                   size: 35,
                   color: yellow,
                 ),
-                title: const Text("Job Posted",
+                title: const Text("Projects",
                     style:
                         TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
               ),

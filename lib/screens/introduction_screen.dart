@@ -75,12 +75,25 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "ArchNEO",
+          title: "",
           bodyWidget: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              /*Text("Let's begin ", style: bodyStyle),
-              Text(" to find a perfect job", style: bodyStyle),*/
+            children: [
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    Image.asset(
+                      'assets/images/logo_archneo.png',
+                      height: 170,
+                    ),
+                    Text('ARCHNEO',
+                        style: TextStyle(
+                            fontSize: 19.0,
+                            color: Color.fromARGB(255, 14, 14, 54),
+                            fontFamily: 'JosefinSans'))
+                  ],
+                ),
+              ),
             ],
           ),
           decoration: pageDecoration.copyWith(
@@ -94,7 +107,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ),
       ],
       onDone: () => _onIntroEnd(context),
-      //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+      // onSkip: () => _onIntroEnd(context), // You can override onSkip callback
       showSkipButton: true,
       skipOrBackFlex: 0,
       nextFlex: 0,
@@ -105,10 +118,14 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         color: Color(0xffD2A244),
       ),
       skip: const Text('Skip',
-          style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xffD2A244), fontSize: 18)),
+          style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Color(0xffD2A244),
+              fontSize: 18)),
       next: const Icon(Icons.arrow_forward, color: Color(0xffD2A244)),
       done: const Text('Done',
-          style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xffD2A244))),
+          style:
+              TextStyle(fontWeight: FontWeight.w600, color: Color(0xffD2A244))),
       curve: Curves.bounceIn, //Curves.fastLinearToSlowEaseIn,
       controlsMargin: const EdgeInsets.all(16),
       controlsPadding: kIsWeb
@@ -116,7 +133,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           : const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
       dotsDecorator: const DotsDecorator(
         size: Size(10.0, 10.0),
-        color: Color(0xFFBDBDBD),
+        color: Color.fromARGB(255, 255, 255, 255),
         activeSize: Size(22.0, 10.0),
         activeShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
@@ -124,7 +141,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         activeColor: Color(0xffD2A244),
       ),
       dotsContainerDecorator: const ShapeDecoration(
-        color: Color.fromARGB(221, 58, 56, 56),
+        color: Color.fromARGB(255, 14, 14, 54),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),

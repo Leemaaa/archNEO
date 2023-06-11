@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'projects_card.dart';
+import '../search/projects_card.dart';
 
 class taken extends StatefulWidget {
   const taken({super.key});
@@ -13,26 +13,26 @@ class _takenState extends State<taken> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        /*
-        Job(
-          position: 'Graphics Designer',
-          companyName: 'RDX',
-          date: DateTime(2013, 2, 1),
-          type: 'taken',
-        ),
-        Job(
-          position: 'Flutter Developer',
-          companyName: 'ABC',
-          date: DateTime(2013, 2, 1),
-          type: 'taken',
-        ),
-        Job(
-          position: 'Web Designer',
-          companyName: 'AAU',
-          date: DateTime(2013, 2, 1),
-          type: 'taken',
-        ),
-        */
+        // /*
+        // Job(
+        //   position: 'Graphics Designer',
+        //   companyName: 'RDX',
+        //   date: DateTime(2013, 2, 1),
+        //   type: 'taken',
+        // ),
+        // Job(
+        //   position: 'Flutter Developer',
+        //   companyName: 'ABC',
+        //   date: DateTime(2013, 2, 1),
+        //   type: 'taken',
+        // ),
+        // Job(
+        //   position: 'Web Designer',
+        //   companyName: 'AAU',
+        //   date: DateTime(2013, 2, 1),
+        //   type: 'taken',
+        // ),
+        // */
       ],
     );
   }

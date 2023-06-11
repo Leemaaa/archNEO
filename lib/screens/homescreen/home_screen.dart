@@ -1,14 +1,17 @@
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:freelance_app/screens/activity/activity.dart';
 
 import 'package:freelance_app/screens/profile/profile.dart';
 import 'package:freelance_app/screens/conference/conference.dart';
+import 'package:freelance_app/screens/search/project_activity.dart';
 import 'package:freelance_app/utils/colors.dart';
 import 'package:freelance_app/screens/homescreen/components/posted_events.dart';
 import 'package:freelance_app/screens/homescreen/sidebar.dart';
-import 'package:freelance_app/screens/search/search_screen.dart';
+import 'package:freelance_app/screens/search/project_making_screen.dart';
 
 import 'components/event.dart';
 
@@ -20,6 +23,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String? eventsCategoryFilter;
+  final auth = FirebaseAuth.instance;
+
+  void getMyData() async {
+    final userDoc = await FirebaseFirestore.instance
+        .collection('clients')
+        .where('Email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .get();
+
+    setState(() {
+      // nameForposted = userDoc.docs[0]['Name'];
+      // userImageForPosted = userDoc.docs[0]['PhotoUrl'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getMyData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -57,48 +81,91 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
 
   @override
   Widget build(BuildContext context) {
+    // User? user = auth.currentUser;
     final _uid = user!.uid;
     final _email = user!.email;
     print(_uid);
     return Scaffold(
       body: <Widget>[
         const Homepage(),
-        const Search(),
-        VideoCallPage(
-          userID: _uid,
-        ),
         const Projects(),
+        // Search(
+        //   userID: _uid,
+        // ),
+
+        // VideoCallPage(
+        //   userID: _uid,
+        // ),
+        const Activity(),
         ProfilePage(
           userID: _uid,
           uEmail: _email,
         ),
+        //
+
+        // const Search(),
+
+        // // const Search(),
+        // const Projects(),
+        // // const Homepage(),
+
+        // VideoCallPage(
+        //   userID: _uid,
+        // ),
+        // const Homepage(),
+        // ProfilePage(
+        //   userID: _uid,
+        // ),
       ][currentIndex],
-      floatingActionButton: currentIndex == 0 || currentIndex == 1
-          ? FloatingActionButton(
-              backgroundColor: const Color(0xffD2A244),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => Upload(
-                            userID: _uid,
-                          ) //const LoginScreen(),
+      floatingActionButton:
+          // ignore: unrelated_type_equality_checks
+          currentIndex == 0
+              //ooooooop
+              ? FloatingActionButton(
+                  backgroundColor: const Color(0xffD2A244),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => Upload(
+                                userID: _uid,
+                              ) //const LoginScreen(),
+                          ),
+                    );
+                  },
+                  child: const Icon(
+                    Icons.add_rounded,
+                    //size: 40,
+                    color: Colors.white,
+                  ),
+                )
+              : currentIndex == 1
+                  //button for project making
+                  ? FloatingActionButton(
+                      backgroundColor: const Color(0xffD2A244),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => Search(
+                                    userID: _uid,
+                                  ) //const LoginScreen(),
+                              ),
+                        );
+                      },
+                      child: const Icon(
+                        Icons.add_rounded,
+                        //size: 40,
+                        color: Colors.white,
                       ),
-                );
-              },
-              child: const Icon(
-                Icons.add_rounded,
-                //size: 40,
-                color: Colors.white,
-              ),
-            )
-          : null,
+                    )
+                  : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: BubbleBottomBar(
         backgroundColor: Colors.white,
-        hasNotch: false,
-        //fabLocation: BubbleBottomBarFabLocation.end,
-        opacity: 0.5,
+        hasNotch: true,
+        // fabLocation: BubbleBottomBarFabLocation.end,
+        opacity: 1,
         currentIndex: currentIndex,
         onTap: changePage,
         borderRadius: const BorderRadius.vertical(
@@ -111,8 +178,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
 
         items: const <BubbleBottomBarItem>[
           BubbleBottomBarItem(
-            backgroundColor: Color(0xff187795),
-            icon: Icon(
+            backgroundColor: Color.fromARGB(255, 14, 14, 54),
+            icon: const Icon(
               Icons.dashboard,
               color: Colors.black,
             ),
@@ -121,46 +188,18 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               color: Colors.white,
             ),
             title: Text(
-              "Events",
+              "Home ",
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
           BubbleBottomBarItem(
-              backgroundColor: Color(0xff187795),
-              icon: Icon(
+              backgroundColor: Color.fromARGB(255, 14, 14, 54),
+              icon: const Icon(
                 Icons.search,
                 color: Colors.black,
               ),
               activeIcon: Icon(
                 Icons.search,
-                color: Colors.white,
-              ),
-              title: Text(
-                "Search",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              )),
-          BubbleBottomBarItem(
-              backgroundColor: Color(0xff187795),
-              icon: Icon(
-                Icons.video_call,
-                color: Colors.black,
-              ),
-              activeIcon: Icon(
-                Icons.video_call_outlined,
-                color: Colors.white,
-              ),
-              title: Text(
-                "Conf",
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              )),
-          BubbleBottomBarItem(
-              backgroundColor: Color(0xff187795),
-              icon: Icon(
-                Icons.library_books,
-                color: Colors.black,
-              ),
-              activeIcon: Icon(
-                Icons.library_books,
                 color: Colors.white,
               ),
               title: Text(
@@ -168,8 +207,22 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                 style: TextStyle(color: Colors.white, fontSize: 16),
               )),
           BubbleBottomBarItem(
-              backgroundColor: Color(0xff187795),
-              icon: Icon(
+              backgroundColor: Color.fromARGB(255, 14, 14, 54),
+              icon: const Icon(
+                Icons.library_books,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.library_books,
+                color: Colors.white,
+              ),
+              title: Text(
+                "Events",
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              )),
+          BubbleBottomBarItem(
+              backgroundColor: Color.fromARGB(255, 14, 14, 54),
+              icon: const Icon(
                 Icons.person_outline,
                 color: Colors.black,
               ),
@@ -221,7 +274,7 @@ class _HomepageState extends State<Homepage> {
             Padding(
               padding: EdgeInsets.only(left: 15, top: 20),
               child: Text(
-                "Find Your Inspiration ",
+                "Join Upcoming ",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
             ),
@@ -241,6 +294,7 @@ class _HomepageState extends State<Homepage> {
               height: 10,
             ),
             Events(),
+
             //Bottomnavbar(),
           ],
         ),

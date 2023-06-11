@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:freelance_app/config/user_state.dart';
+import 'package:freelance_app/screens/homescreen/sidebar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -76,6 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      drawer: SideBar(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -116,8 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 alignment: Alignment.center,
                                 child: Text(name == null ? 'Name here' : name!,
                                     style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 22.0)),
+                                        color: Colors.black, fontSize: 22.0)),
                               ),
                               const SizedBox(
                                 height: 15,
@@ -132,7 +133,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               const Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
-                                  'Information :',
+                                  'Architect Information :',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 22.0),
                                 ),
@@ -196,52 +197,207 @@ class _ProfilePageState extends State<ProfilePage> {
                                   : Center(
                                       child: Padding(
                                         padding:
-                                            const EdgeInsets.only(bottom: 30),
-                                        child: MaterialButton(
-                                          onPressed: () {
-                                            _auth.signOut();
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    UserState(),
-                                              ),
-                                            );
-                                          },
-                                          color: Colors.white10,
-                                          elevation: 1,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(25)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 14),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: const [
-                                                Text(
-                                                  'Logout',
-                                                  style: TextStyle(
+                                            const EdgeInsets.only(bottom: 0),
+                                        child: Row(
+                                          children: [
+                                            const Spacer(),
+                                            MaterialButton(
+                                              onPressed: () {
+                                                _auth.signOut();
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserState(),
+                                                  ),
+                                                );
+                                              },
+                                              color: Colors.white10,
+                                              elevation: 1,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          25)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 14),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Text(
+                                                      'Logout',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Icon(
+                                                      Icons.logout,
                                                       color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20),
+                                                    ),
+                                                  ],
                                                 ),
-                                                SizedBox(
-                                                  width: 8,
-                                                ),
-                                                Icon(
-                                                  Icons.logout,
-                                                  color: Colors.white,
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
+                                            const Spacer(),
+                                            MaterialButton(
+                                              onPressed: () {
+                                                _auth.signOut();
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserState(),
+                                                  ),
+                                                );
+                                              },
+                                              color: Color.fromARGB(
+                                                  255, 239, 177, 51),
+                                              elevation: 1,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          25)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 14),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: const [
+                                                    Text(
+                                                      'Edit Info',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Icon(
+                                                      Icons.edit,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                          ],
                                         ),
                                       ),
                                     ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              !_isSameUser
+                                  ? Container()
+                                  : Center(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 0),
+                                        child: Row(
+                                          children: [
+                                            const Spacer(),
+                                            IconButton(
+                                              onPressed: () {},
+                                              color: const Color.fromARGB(
+                                                  26, 0, 0, 0),
+                                              icon: Icon(
+                                                Icons.mail,
+                                                color: const Color.fromARGB(
+                                                    255, 0, 0, 0),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            IconButton(
+                                              onPressed: () {},
+                                              color: const Color.fromARGB(
+                                                  26, 0, 0, 0),
+                                              icon: Icon(
+                                                Icons.phone,
+                                                color: const Color.fromARGB(
+                                                    255, 0, 0, 0),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            IconButton(
+                                              onPressed: () {},
+                                              color: const Color.fromARGB(
+                                                  26, 0, 0, 0),
+                                              icon: Icon(
+                                                Icons.portrait,
+                                                color: const Color.fromARGB(
+                                                    255, 0, 0, 0),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            IconButton(
+                                              onPressed: () {},
+                                              color: const Color.fromARGB(
+                                                  26, 0, 0, 0),
+                                              icon: Icon(
+                                                Icons.book,
+                                                color: const Color.fromARGB(
+                                                    255, 0, 0, 0),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            IconButton(
+                                              onPressed: () {},
+                                              color: const Color.fromARGB(
+                                                  26, 0, 0, 0),
+                                              icon: Icon(
+                                                Icons.phone_in_talk,
+                                                color: const Color.fromARGB(
+                                                    255, 0, 0, 0),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            IconButton(
+                                              onPressed: () {},
+                                              color: const Color.fromARGB(
+                                                  26, 0, 0, 0),
+                                              icon: Icon(
+                                                Icons.inbox,
+                                                color: const Color.fromARGB(
+                                                    255, 0, 0, 0),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                              const Divider(
+                                thickness: 1,
+                                color: Colors.black,
+                              ),
+                              Card(
+                                // margin: const EdgeInsets.all(20),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    ListTile(
+                                      // leading: Image.asset('images/sky.jpg'),
+                                      title: const Text('My Projects'),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),

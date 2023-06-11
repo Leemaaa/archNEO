@@ -46,7 +46,8 @@ class _SignUpScreenState extends State<SignUpScreen>
   final TextEditingController _portfolioController = TextEditingController();
   final FocusNode _portfolioFocusNode = FocusNode();
 
-  final TextEditingController _specializationController = TextEditingController();
+  final TextEditingController _specializationController =
+      TextEditingController();
   final FocusNode _specializationFocusNode = FocusNode();
 
   bool _isLoading = false;
@@ -148,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                     ),
                     Padding(
                       padding:
-                      const EdgeInsets.only(bottom: layout.padding * 2),
+                          const EdgeInsets.only(bottom: layout.padding * 2),
                       child: _specializationFormField(),
                     ),
                     _isLoading
@@ -498,7 +499,7 @@ class _SignUpScreenState extends State<SignUpScreen>
     return MaterialButton(
       onPressed: _submitSignUpForm,
       // elevation: layout.elevation,
-      color: clr.primary,
+      color: Color.fromARGB(255, 14, 14, 54),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(layout.radius * 2),
       ),
@@ -556,7 +557,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         imageUrl = await ref.getDownloadURL();
         FirebaseFirestore.instance.collection('architects').doc(uID).set(
           {
-            'ID': uID,
+            'id': uID,
             'PhotoUrl': imageUrl,
             'Name': _nameController.text,
             'Email': _emailController.text,
@@ -569,7 +570,7 @@ class _SignUpScreenState extends State<SignUpScreen>
         );
         FirebaseFirestore.instance.collection('roles').doc(uID).set(
           {
-            'ID': uID,
+            'id': uID,
             'Role': 'architect',
             'Email': _emailController.text,
             'CreatedAt': Timestamp.now(),
@@ -610,8 +611,7 @@ class _SignUpScreenState extends State<SignUpScreen>
           const TextSpan(text: '   '),
           TextSpan(
             recognizer: TapGestureRecognizer()
-              ..onTap = () =>
-                  Navigator.push(
+              ..onTap = () => Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const LoginScreen()),

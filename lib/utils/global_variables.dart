@@ -21,6 +21,13 @@ List<String> eventSubjects = [
   'art',
 ];
 
+List<String> projectSubjects = [
+  'House Draft',
+  'Interior',
+  'Urban Projects',
+  'Reconstruction',
+];
+
 const String appId = "30634a79a6b54d5da04faea54f0a9b1a";
 String? token;
 

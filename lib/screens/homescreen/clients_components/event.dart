@@ -29,7 +29,8 @@ class _UploadState extends State<Upload> {
   final TextEditingController _eventDescController = TextEditingController();
   final FocusNode _eventDescFocusNode = FocusNode();
 
-  final TextEditingController _eventDeadlineController = TextEditingController();
+  final TextEditingController _eventDeadlineController =
+      TextEditingController();
   final FocusNode _eventDeadlineFocusNode = FocusNode();
   DateTime? selectedDeadline;
   Timestamp? deadlineDateTimeStamp;
@@ -333,7 +334,7 @@ class _UploadState extends State<Upload> {
         _uploadEvent();
       },
       elevation: layout.elevation,
-      color: clr.primary,
+      color: Color.fromARGB(255, 14, 14, 54),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(layout.radius),
       ),
@@ -560,7 +561,7 @@ class _UploadState extends State<Upload> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     setState(() {
-      id = userDoc.get('ID');
+      id = userDoc.get('id');
       name = userDoc.get('Name');
       user_image = userDoc.get('PhotoUrl');
       venue = userDoc.get('address');

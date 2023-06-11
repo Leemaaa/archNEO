@@ -55,11 +55,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 50,
                     width: 50,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 1),
+                      border: Border.all(color: Color(0xffD2A244), width: 1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: IconButton(
                         icon: const Icon(Icons.arrow_back_ios_sharp),
+                        color: Color(0xffD2A244),
                         onPressed: () {
                           Navigator.pop(context);
                         }),
@@ -69,11 +70,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.all(10.0),
                   child: Text("Welcome Back!\nGlad to see you again",
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 14, 14, 54),
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                       )),
                 ),
+                const SizedBox(height: 20),
                 CustomTextfield(
                   myController: _emailController,
                   hintText: "Enter your Email",
@@ -105,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 CustomButton(
                   buttonText: "Login",
-                  buttonColor: clr.primary,
+                  buttonColor: Color.fromARGB(255, 14, 14, 54),
                   textColor: Colors.white,
                   onPressed: () async {
                     try {
@@ -160,92 +162,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                 ),
-                /*
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 1,
-                        width: MediaQuery.of(context).size.height * 0.15,
-                        color: Colors.grey,
-                      ),
-                      const Text("               "),
-                      Container(
-                        height: 1,
-                        width: MediaQuery.of(context).size.height * 0.18,
-                        color: Colors.grey,
-                      ),
-                    ],
-                  ),
-                ),
-                
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                          height: 50,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: IconButton(
-                            icon: const Icon(
-                              FontAwesomeIcons.facebookF,
-                              color: Colors.blue,
-                            ),
-                            onPressed: () {},
-                          )),
-                      Container(
-                        height: 50,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: IconButton(
-                          icon: const Icon(
-                            FontAwesomeIcons.google,
-                            // color: Colors.blue,
-                          ),
-                          onPressed: () async {
-                            await FirebaseAuthService().logininwithgoogle();
-
-                            if (FirebaseAuth.instance.currentUser != null) {
-                              if (!mounted) return;
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Homescreen()));
-                            } else {
-                              throw Exception("Error");
-                            }
-                          },
-                        ),
-                      ),
-                      Container(
-                          height: 50,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: IconButton(
-                            icon: const Icon(
-                              FontAwesomeIcons.apple,
-                              // color: Colors.blue,
-                            ),
-                            onPressed: () {},
-                          ))
-                    ],
-                  ),
-                ),
-                */
                 const SizedBox(
                   height: 10,
                 ),
@@ -259,11 +175,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       const TextSpan(text: '   '),
                       TextSpan(
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () =>
-                              Navigator.push(
+                          ..onTap = () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const ChooseRoleScreen()),
+                                    builder: (context) =>
+                                        const ChooseRoleScreen()),
                               ),
                         text: 'Register Now',
                         style: txt.mediumTextButton,
